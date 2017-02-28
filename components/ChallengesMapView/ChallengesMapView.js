@@ -1,12 +1,192 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
-  View
+  View,
+  Dimensions,
+  Text,
+  Image
 } from 'react-native';
 
 import MapView from 'react-native-maps';
 import PartialChallengeDetailsView from '../PartialChallengeDetailsView/PartialChallengeDetailsView'
-import mockData from './mockData.json'
+
+import customMapHeadMarker from '../../app/assets/custom-map-head-marker.png';
+import customMapTrailingMarker from '../../app/assets/custom-map-trailing-marker.png';
+
+const screen = Dimensions.get('window');
+
+const ASPECT_RATIO = screen.width / screen.height;
+const LATITUDE = 37.78825;
+const LONGITUDE = -122.4324;
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+const SPACE = 0.01;
+
+export default class GCMapView extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showInfoWindow: false,
+      region: {
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+      },
+      trailingMarkers: [],
+      headMarkers: [],
+      selectedChallenge: null,
+      mapSnapshot: null,
+      cachedSnapshots: {}
+    }
+
+  }
+
+  takeSnapshot (snapshotId) {
+    // 'takeSnapshot' takes a config object with the
+    // following options
+    console.log(this.state.cachedSnapshots);
+    if(!this.state.cachedSnapshots[snapshotId]) {
+      const snapshot = this.refs.map.takeSnapshot({
+        width: 300,      // optional, when omitted the view-width is used
+        height: 300,     // optional, when omitted the view-height is used
+        // region: {..},    // iOS only, optional region to render
+        format: 'png',   // image formats: 'png', 'jpg' (default: 'png')
+        quality: 0.8,    // image quality: 0..1 (only relevant for jpg, default: 1)
+        result: 'file'   // result types: 'file', 'base64' (default: 'file')
+      });
+
+      snapshot.then((uri) => {
+        var cachedSnapshots = this.state.cachedSnapshots;
+        cachedSnapshots[snapshotId] = uri;
+        this.setState({ 
+          mapSnapshot: uri,
+          cachedSnapshots: cachedSnapshots
+        });
+      });
+    }
+    else {
+      this.setState({
+        mapSnapshot: this.state.cachedSnapshots[snapshotId]
+      });
+    }
+  }
+
+  componentDidMount() {
+    var headMarkers = this.getHeadMarkers(this.props.challenges);
+    this.setState({
+      headMarkers: headMarkers
+    });
+  }
+
+  getHeadMarkers(challenges) {
+    var headMarkers = [];
+
+    var headMarkers = challenges.map(challenge => (
+      {
+        latlng: {
+          latitude: challenge.locations[0].latitude,
+          longitude: challenge.locations[0].longitude
+        },
+        title: challenge.locations[0].title,
+        chalengeDescription: challenge.description,
+        challengeId: challenge.id
+      }
+    ));
+
+    return headMarkers;
+  }
+
+  onHeadMarkerSelect(marker) {
+    var selectedChallenge = this.props.challenges.find(function(challenge) {
+      return challenge.id == marker.challengeId
+    });
+
+    var trailingMarkers = selectedChallenge.locations.slice(1).map(location => (
+      {
+        latlng: {
+          latitude: location.latitude,
+          longitude: location.longitude
+        },
+        title: location.title,
+        chalengeDescription: selectedChallenge.description,
+        challengeId: selectedChallenge.id
+      }
+    ));
+    this.takeSnapshot(selectedChallenge.id)
+    this.setState(prevState => ({
+      showInfoWindow: true,
+      trailingMarkers: trailingMarkers,
+      selectedChallenge: selectedChallenge
+    }));
+  }
+
+  onHeadMarkerDeselect(marker) {
+    console.log("onHeadMarkerDeselect", marker)
+    // The following causes the map to flicker with info window
+    // this.setState({
+    //   showInfoWindow: false,
+    //   trailingMarkers: []
+    // })
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={{flex:1}}>
+          <MapView ref="map"
+            style={styles.map}
+            initialRegion={this.state.region}
+            loadingEnabled
+            loadingIndicatorColor="#666666"
+            loadingBackgroundColor="#eeeeee"
+          >
+            {this.state.headMarkers.map(marker => (
+              <MapView.Marker 
+                key={marker.title}
+                identifier={marker.title}
+                coordinate={marker.latlng}
+                title={marker.title}
+                onSelect={() => this.onHeadMarkerSelect(marker)}
+                onDeselect={() => this.onHeadMarkerDeselect(marker)}
+                onPress={() => this.onHeadMarkerSelect(marker)}
+                image={customMapHeadMarker}
+              />
+            ))}
+            {this.state.trailingMarkers.map(marker => (
+              <MapView.Marker
+                key={marker.title}
+                identifier={marker.title}
+                coordinate={marker.latlng}
+                title={marker.title}
+                image={customMapTrailingMarker}
+              />
+            ))}
+            {this.state.selectedChallenge &&
+              <MapView.Polyline
+                key="selectedChallengeRoute"
+                coordinates={this.state.selectedChallenge.locations}
+                strokeColor="#F00"
+                fillColor="rgba(255,0,0,0.5)"
+                strokeWidth={2}
+              />}
+          </MapView>
+        </View>
+        {this.state.showInfoWindow && 
+          <PartialChallengeDetailsView 
+            challenge={this.state.selectedChallenge} 
+            imageSrc={this.state.mapSnapshot} />
+        }
+      </View>
+    );
+  }
+}
+
+GCMapView.propTypes = {
+  challenges: PropTypes.array
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -21,112 +201,3 @@ const styles = StyleSheet.create({
     bottom: 0,
   }
 });
-
-export default class GCMapView extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.mapMarkers = {}
-    this.state = {
-      showInfoWindow: false,
-      region: {
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      },
-      extraPoints: []
-    }
-    this.state.markers = this.getStartingPoints(mockData.challenges)
-  }
-
-  getStartingPoints(challenges) {
-    var startPoints = [];
-    for(var i=0; i<challenges.length; i++) {
-      startPoints.push({
-        latlng: {
-          latitude: challenges[i].locations[0].latitude,
-          longitude: challenges[i].locations[0].longitude
-        },
-        title: challenges[i].locations[0].title,
-        chalengeDescription: challenges[i].description,
-        challengeId: challenges[i].id
-      });
-    }
-    return startPoints;
-  }
-
-  // android only
-  onMarkerPress() {
-    console.log("onMarkerPress")
-  }
-
-  // iOS only
-  onMarkerSelect(marker) {
-    var selectedChallenge = mockData.challenges.find(function(challenge) {
-      return challenge.id == marker.challengeId
-    });
-    var extraPoints = [];
-    var selectedLocations = selectedChallenge.locations
-    for(var i=1; i<selectedLocations.length; i++) {
-      extraPoints.push({
-        latlng: {
-          latitude: selectedLocations[i].latitude,
-          longitude: selectedLocations[i].longitude
-        },
-        title: selectedLocations[i].title,
-        chalengeDescription: selectedChallenge.description,
-        challengeId: selectedChallenge.id
-      })
-    }
-    this.setState(prevState => ({
-      showInfoWindow: true,
-      extraPoints: extraPoints
-    }));
-  }
-
-  onMarkerDeselect(marker) {
-    // this.setState(prevState => ({
-    //   showInfoWindow: false,
-    //   extraPoints: []
-    // }));    
-    console.log("onMarkerDeselect")
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={{flex:1}}>
-          <MapView style={styles.map}
-            region={this.state.region}
-          >
-            {this.state.markers.map(marker => (
-              <MapView.Marker key={marker.title}
-                ref={ref => { this.mapMarkers[marker.title] = ref; }}
-                identifier={marker.title}
-                coordinate={marker.latlng}
-                title={marker.title}
-                onSelect={() => this.onMarkerSelect(marker)}
-                onDeselect={() => this.onMarkerDeselect(marker)}
-                description={marker.description}
-              >
-              </MapView.Marker>
-            ))}
-            {this.state.extraPoints.map(marker => (
-              <MapView.Marker key={marker.title}
-                identifier={marker.title}
-                coordinate={marker.latlng}
-                title={marker.title}
-                pinColor="blue"
-              >
-              </MapView.Marker>
-            ))}
-          </MapView>
-        </View>
-        {this.state.showInfoWindow && 
-        <PartialChallengeDetailsView challenge={mockData.challenges[0]}/>}
-      </View>
-    );
-  }
-}
