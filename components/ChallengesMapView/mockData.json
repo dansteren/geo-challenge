@@ -19,6 +19,17 @@
 				{
 					"longitude": -122.4354,
 					"latitude": 37.78425,
+					"title": "Half way there!",
+					"content": {
+						"text": null,
+						"image": "image/url/something/whatevs",
+						"video": "video/url/something/whatevs"
+					},
+					"lockType": "auto"
+				},
+				{
+					"longitude": -122.4384,
+					"latitude": 37.77025,
 					"title": "You Finshed!",
 					"content": {
 						"text": "It's done",

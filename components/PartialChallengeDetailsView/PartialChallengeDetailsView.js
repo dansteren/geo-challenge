@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight
+  Image,
+  ActivityIndicator
 } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:"slateblue", 
+    backgroundColor:"lightgrey", 
     alignItems:"center", 
     justifyContent:"center"
   },
@@ -20,11 +21,13 @@ export default class PartialChallengeDetailsView extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      imageLoading: true
+    }
   }
 
-  onMarkerDeselect() {
-    console.log("onMarkerDeselect")
-  }
+
 
   getRouteLength() {
     var locations = this.props.challenge.locations;
@@ -42,8 +45,21 @@ export default class PartialChallengeDetailsView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>[Partial Challenge Details View]</Text>
-        <Text><Text style={{fontWeight: 'bold'}}>Challenge: </Text>{this.props.challenge.title}</Text>
+        {!this.props.imageSrc ? 
+          <ActivityIndicator
+            animating={true}
+            style={[styles.centering, {height: 80}]}
+            size="large"
+          /> : 
+          <Image
+            source={{ uri: this.props.imageSrc }}
+            style={{ width: 100, height: 100 }}
+          />
+        }
+        <Text>
+          <Text style={{fontWeight: 'bold'}}>Challenge: </Text>
+          {this.props.challenge.title}
+        </Text>
         <Text>
           <Text style={{fontWeight: 'bold'}}>GPS Points: </Text>
           <Text>{this.props.challenge.locations.length}</Text>
@@ -55,4 +71,8 @@ export default class PartialChallengeDetailsView extends Component {
       </View>
     );
   }
+}
+
+PartialChallengeDetailsView.propTypes = {
+  challenge: PropTypes.object
 }
