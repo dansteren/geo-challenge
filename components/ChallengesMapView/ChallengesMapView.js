@@ -36,7 +36,8 @@ export default class GCMapView extends Component {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       },
-      extraPoints: []
+      extraPoints: [],
+      selectedChallengeId: 0 // will be updated in onMarkerSelect
     }
     this.state.markers = this.getStartingPoints(mockData.challenges)
   }
@@ -82,7 +83,8 @@ export default class GCMapView extends Component {
     }
     this.setState(prevState => ({
       showInfoWindow: true,
-      extraPoints: extraPoints
+      extraPoints: extraPoints,
+      selectedChallengeId: selectedChallenge.id
     }));
   }
 
@@ -90,7 +92,7 @@ export default class GCMapView extends Component {
     // this.setState(prevState => ({
     //   showInfoWindow: false,
     //   extraPoints: []
-    // }));    
+    // }));
     console.log("onMarkerDeselect")
   }
 
@@ -124,8 +126,8 @@ export default class GCMapView extends Component {
             ))}
           </MapView>
         </View>
-        {this.state.showInfoWindow && 
-        <PartialChallengeDetailsView challenge={mockData.challenges[0]}/>}
+        {this.state.showInfoWindow &&
+        <PartialChallengeDetailsView challengeId={this.state.selectedChallengeId}/>}
       </View>
     );
   }
