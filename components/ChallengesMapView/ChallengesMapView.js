@@ -133,9 +133,13 @@ export default class GCMapView extends Component {
       </View>
     );
   }
-  
+
   closeInfoWindow() {
     console.log('closeInfoWindow called in parent')
-    this.state.showInfoWindow = false
+    this.setState(prevState => ({
+      showInfoWindow: false,
+      extraPoints: [],
+      selectedChallengeId: ''
+    }));
   }
 }
