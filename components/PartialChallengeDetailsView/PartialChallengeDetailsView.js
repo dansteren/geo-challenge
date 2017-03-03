@@ -95,6 +95,13 @@ export default class PartialChallengeDetailsView extends Component {
     return totalDistance;
   }
 
+  hide() {
+    console.log('closeInfoWindow called')
+    console.log(this.props)
+    this.props.showInfoWindow = false
+    // super.closeInfoWindow()
+  }
+
   render() {
     return (
       <ScrollView style={{flex: 1}}>
@@ -124,8 +131,8 @@ export default class PartialChallengeDetailsView extends Component {
             </View>
             <View style={{margin:1}}>
               <Button style={styles.startButton}
-                title='Return'
-                onPress=''
+                title='Back'
+                onPress={this.hide.bind(this)}
                 color='green'
                 textAlign='center'
               />
