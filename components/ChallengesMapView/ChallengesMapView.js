@@ -135,7 +135,7 @@ export default class GCMapView extends Component {
   }
 
   closeInfoWindow() {
-    console.log('closeInfoWindow called in parent')
+    
     this.setState(prevState => ({
       showInfoWindow: false,
       extraPoints: [],
