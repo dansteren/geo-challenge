@@ -95,11 +95,8 @@ export default class PartialChallengeDetailsView extends Component {
     return totalDistance;
   }
 
-  hide() {
-    console.log('closeInfoWindow called')
-    console.log(this.props)
-    this.props.showInfoWindow = false
-    // super.closeInfoWindow()
+  pressHandler() {
+    this.props.onPressSuper()
   }
 
   render() {
@@ -132,7 +129,7 @@ export default class PartialChallengeDetailsView extends Component {
             <View style={{margin:1}}>
               <Button style={styles.startButton}
                 title='Back'
-                onPress={this.hide.bind(this)}
+                onPress={() => this.pressHandler()}
                 color='green'
                 textAlign='center'
               />

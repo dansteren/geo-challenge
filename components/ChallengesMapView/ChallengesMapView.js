@@ -42,11 +42,6 @@ export default class GCMapView extends Component {
     this.state.markers = this.getStartingPoints(mockData.challenges)
   }
 
-  closeInfoWindow() {
-    console.log('closeInfoWindow called in parent')
-    this.state.showInfoWindow = false
-  }
-
   getStartingPoints(challenges) {
     var startPoints = [];
     for(var i=0; i<challenges.length; i++) {
@@ -134,9 +129,13 @@ export default class GCMapView extends Component {
         {this.state.showInfoWindow &&
         <PartialChallengeDetailsView
           challengeId={this.state.selectedChallengeId}
-          showInfoWindow={this.state.showInfoWinow}
-          />}
+          onPressSuper={() => this.closeInfoWindow()}/>}
       </View>
     );
+  }
+  
+  closeInfoWindow() {
+    console.log('closeInfoWindow called in parent')
+    this.state.showInfoWindow = false
   }
 }
