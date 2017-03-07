@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, ScrollView } from 'react-native';
 import { ChallengeCreationCSS as Css } from './ChallengeCreationView.css'
 import DescriptionInput from '../DescriptionInput/DescriptionInput'
 import ExpirationInput from '../ExpirationInput/ExpirationInput'
@@ -9,49 +9,50 @@ import LocationsList from '../LocationsList/LocationsList'
 export default class ChallengeCreationView extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: this.props.name,
-      expiration: this.props.expiration
-    };
+    if (this.props.challenge) {
+      this.state = {
+        title: this.props.challenge.title,
+        description: this.props.challenge.description,
+        expiration: this.props.challenge.expiration,
+        locations: this.props.challenge.locations
+      };
+    }
   }
 
   render() {
     return (
       <View style={Css.page}>
         <TextInput
-          style={Css.challengeName}
+          style={Css.challengeTitle}
           autoCapitalize='sentences'
           placeholderTextColor='#FFFFFFDE'
           underlineColorAndroid='transparent'
-          onChangeText={(name) => this.updateName(name)}
-          value={this.state.name}
-          placeholder='Enter a name for your challenge'
+          onChangeText={(title) => this.setState({ title })}
+          value={this.state.title}
+          placeholder='Enter a title for your challenge'
         />
-        <View style={{height: 8}}/>
-        <ExpirationInput
-          expires={this.state.expiration}
-        />
-        <ListDivider/>
-        <DescriptionInput
-          description={this.props.description}
-          onChange={(description) => this.props.onDescriptionChange(description)}
-        />
-        <View style={{height: 8}}/>
-        <LocationsList locations={this.state.locations}/>
+        <ScrollView>
+          <View style={{height: 8}}/>
+          <ExpirationInput
+            expires={this.state.expiration}
+          />
+          <ListDivider/>
+          <DescriptionInput
+            description={this.state.description}
+            onChange={(description) => this.setState({description})}
+          />
+          <View style={{height: 8}}/>
+          <LocationsList locations={this.state.locations}/>
+        </ScrollView>
+        <View style={Css.footer}>
+          <Text style={Css.submitButton}>SUBMIT</Text>
+        </View>
       </View>
     )
-  }
-
-  updateName(name) {
-    this.setState({ name });
   }
 }
 
 
 ChallengeCreationView.propTypes = {
-  name: PropTypes.string,
-  expiration: PropTypes.string,
-  description: PropTypes.string,
-  onDescriptionChange: PropTypes.func,
-  locations: PropTypes.array
+  challenge: PropTypes.object,
 };

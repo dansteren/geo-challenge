@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { DescriptionInputCSS as Css } from './DescriptionInput.css'
-import DescriptionIcon from '../Icons/DescriptionIcon/DescriptionIcon'
+import DescriptionIcon from '../Icons/DescriptionIcon'
 
 export default class DescriptionInput extends Component {
   render() {

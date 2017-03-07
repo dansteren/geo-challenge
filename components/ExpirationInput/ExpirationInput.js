@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { View, Text, TextInput, Switch } from 'react-native';
 import { ExpirationInputCSS as Css } from './ExpirationInput.css'
-import ExpirationIcon from '../Icons/ExpirationIcon/ExpirationIcon'
+import ExpirationIcon from '../Icons/ExpirationIcon'
 
 import renderIf from './renderIf'
 
@@ -20,7 +20,7 @@ export default class ExpirationInput extends Component {
           <ExpirationIcon size={24} style={Css.icon}/>
           <Text style={Css.switchLabel}>Expires</Text>
           <Switch
-            onValueChange={(value) => this.setState( value ? {expires: '06/11/2017'}: {expires: ''})}
+            onValueChange={(value) => this.setState( value ? {expires: 'Sun, Jun 11, 2017'}: {expires: ''})}
             value={this.state.expires ? true : false}
           />
         </View>
