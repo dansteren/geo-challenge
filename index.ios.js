@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry
+	AppRegistry,
 } from 'react-native';
 
-import ChallengesMapView from './components/ChallengesMapView/ChallengesMapView'
+import GCNavigator from './app/containers/GCNavigator'
 
 export default class GeoChallenges extends Component {
-  render() {
-    return (
-      <ChallengesMapView />
-    );
-  }
+	render() {
+		return (
+			<GCNavigator />
+		);
+	}
 }
 
 AppRegistry.registerComponent('GeoChallenges', () => GeoChallenges);
