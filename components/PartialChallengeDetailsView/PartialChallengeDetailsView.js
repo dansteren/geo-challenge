@@ -5,13 +5,14 @@ import {
   View,
   ListView,
   TouchableHighlight,
+  TouchableWithoutFeedback,
   ScrollView,
   Alert,
   Button
 } from 'react-native';
 
-export default class PartialChallengeDetailsView extends Component {
 
+export default class PartialChallengeDetailsView extends Component {
 
   constructor(props) {
     super(props);
@@ -39,6 +40,8 @@ export default class PartialChallengeDetailsView extends Component {
    */
   async getChallengeData() {
     try {
+      // TODO: change this so that it only gets minor challenge details
+
       // let response = await fetch('https://ec2-52-43-242-238.us-west-2.compute.amazonaws.com:3000/api/v1/challenges')
       // let responseJson = await response.json()
       // this.setState({
@@ -90,9 +93,9 @@ export default class PartialChallengeDetailsView extends Component {
     var totalDistance = 0;
     for(var i=0; i<locations.length; i++) {
       // TODO: Calculate distance between points
-      totalDistance += 3;
+      totalDistance += 3
     }
-    return totalDistance;
+    return totalDistance
   }
 
   pressHandler() {
@@ -101,53 +104,11 @@ export default class PartialChallengeDetailsView extends Component {
 
   render() {
     return (
-      <ScrollView style={{flex: 1}}>
-        <View style={styles.challengeDetails}>
-          <Text style={[styles.caption,styles.title]}>{this.state.challengeData.title}</Text>
-          <Text style={[styles.caption,styles.description]}>{this.state.challengeData.description}</Text>
-          <Text style={[styles.caption,styles.createdBy]}>{this.state.createdBy}</Text>
-
-
-          <View style={styles.line}/>
-          <View style={styles.buttonContainer}>
-            <View style={{margin:1}}>
-              <Button style={styles.startButton}
-                title='Begin'
-                onPress=''
-                color='blue'
-                textAlign='center'
-              />
-            </View>
-            <View style={{margin:1}}>
-              <Button style={styles.startButton}
-                title='Add to Favorites'
-                onPress=''
-                color='purple'
-                textAlign='center'
-              />
-            </View>
-            <View style={{margin:1}}>
-              <Button style={styles.startButton}
-                title='Back'
-                onPress={() => this.pressHandler()}
-                color='green'
-                textAlign='center'
-              />
-            </View>
-          </View>
-          <View style={styles.line}/>
-
-          <Text style={[styles.caption,styles.description,styles.completes]}>{this.state.completedBy}:</Text>
-          <ListView
-            dataSource={this.state.users}
-            renderRow={(person) =>
-              <View>
-                <Text style={[styles.caption,styles.descriptionSmall]}>{person.user} <Text style={styles.message}>{person.message}</Text></Text>
-                <View style={styles.line}/>
-              </View>}
-          />
-        </View>
-      </ScrollView>
+      <View style={styles.challengeDetails}>
+        <Text style={[styles.caption,styles.title]}>{this.state.challengeData.title}</Text>
+        <Text style={[styles.caption,styles.description]}>{this.state.challengeData.description}</Text>
+        <Text style={[styles.caption,styles.createdBy]}>{this.state.createdBy}</Text>
+      </View>
     );
   }
 }
@@ -160,8 +121,18 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: 'skyblue'
   },
+  startButton: {
+    backgroundColor: 'red',
+    height: 36,
+    width: 80,
+    margin: 6,
+    position: 'absolute',
+    right: 6,
+    borderRadius: 3
+  },
   challengeDetails: {
-    flex: 3
+    flex: .2,
+    paddingBottom: 20,
   },
   caption: {
     fontSize: 28,
@@ -180,29 +151,5 @@ const styles = StyleSheet.create({
   createdBy: {
     fontSize: 14,
     color: 'grey'
-  },
-  line: {
-    backgroundColor: '#ccc',
-    alignSelf: 'stretch',
-    margin: 10,
-    height: .5
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginLeft: 20,
-    marginRight: 20
-  },
-  startButton: {
-    color:'white'
-  },
-  message: {
-    color: '#414141'
-  },
-  descriptionSmall: {
-    fontSize: 12
-  },
-  completes: {
-    paddingBottom: 10
   }
 })

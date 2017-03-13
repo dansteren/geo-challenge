@@ -93,6 +93,7 @@ export default class GCMapView extends Component {
     //   showInfoWindow: false,
     //   extraPoints: []
     // }));
+    this.closeInfoWindow()
     console.log("onMarkerDeselect")
   }
 
@@ -135,7 +136,7 @@ export default class GCMapView extends Component {
   }
 
   closeInfoWindow() {
-    
+
     this.setState(prevState => ({
       showInfoWindow: false,
       extraPoints: [],
