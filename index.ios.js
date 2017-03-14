@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry
+	AppRegistry,
 } from 'react-native';
 
-import ChallengesMapView from './components/ChallengesMapView/ChallengesMapView'
-import mockData from './components/ChallengesMapView/mockData.json'
+import GCNavigator from './app/containers/GCNavigator'
 
 export default class GeoChallenges extends Component {
-  render() {
-  	var challenges = mockData.challenges;
-    return (
-      <ChallengesMapView challenges={challenges}/>
-    );
-  }
+	render() {
+		return (
+			<GCNavigator />
+		);
+	}
 }
 
 AppRegistry.registerComponent('GeoChallenges', () => GeoChallenges);
