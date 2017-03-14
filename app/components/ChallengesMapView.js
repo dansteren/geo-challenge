@@ -15,16 +15,33 @@ import secondaryMarkerImage from '../assets/secondary-marker.png';
 function ChallengesMapView(props) {
 
 	function onHeadMarkerSelect(e) {
-		props.onHeadMarkerSelect(e.nativeEvent.id);
+		props.onHeadMarkerSelect(e.nativeEvent.id)
 	}
 
 	function onHeadMarkerDeselect(e) {
-		props.onHeadMarkerDeselect(e.nativeEvent.id);
+		props.onHeadMarkerDeselect(e.nativeEvent.id)
 	}
 
 	function goToChallengeCreationScene() {
 		props.navigator.push(ChallengeCreationRoute)
 	}
+
+
+
+  function onMarkerDeselect(marker) {
+    this.closeInfoWindow()
+		console.log("deselecting")
+		console.log(marker)
+  }
+
+  function closeInfoWindow() {
+
+    this.setState(prevState => ({
+      showInfoWindow: false,
+      extraPoints: [],
+      selectedChallengeId: ''
+    }));
+  }
 
 	return (
 		<View style={styles.container}>
@@ -35,7 +52,7 @@ function ChallengesMapView(props) {
 					loadingEnabled
 				>
 					{props.headMarkers.map(marker => (
-						<MapView.Marker 
+						<MapView.Marker
 							key={marker.title} // <-- should be unique id
 							identifier={marker.challengeId}
 							coordinate={marker.latlng}
@@ -69,11 +86,9 @@ function ChallengesMapView(props) {
           title="+"
           />
 			</View>
-			{props.showInfoWindow && 
-				<PartialChallengeDetailsView 
-					challenge={props.selectedChallenge} 
-					imageSrc={props.mapSnapshot} 
-					initialRegion={props.initialRegion} 
+			{props.showInfoWindow &&
+				<PartialChallengeDetailsView
+					challenge={props.selectedChallenge}
 					navigator={props.navigator}>
 				</PartialChallengeDetailsView>
 			}
@@ -99,16 +114,15 @@ const styles = StyleSheet.create({
 		bottom: 0,
 	},
 	createChallengeButton: {
-		position:"absolute", 
-		width:50, 
-		height:50, 
-		bottom: 10, 
-		right: 0, 
-		borderRadius: 25, 
+		position:"absolute",
+		width:50,
+		height:50,
+		bottom: 10,
+		right: 0,
+		borderRadius: 25,
 		borderStyle: "solid",
 		fontSize: 72
 	}
 });
 
 module.exports = ChallengesMapView;
-
