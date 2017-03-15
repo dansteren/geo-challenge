@@ -112,13 +112,13 @@ export default class MainMapScene extends Component {
   render() {
     console.log("render")
     return (
-      <ChallengesMapView 
+      <ChallengesMapView
         initialRegion={this.state.region}
-        headMarkers={this.state.headMarkers} 
+        headMarkers={this.state.headMarkers}
         selectedChallenge={this.state.selectedChallenge}
-        trailingMarkers={this.state.trailingMarkers} 
+        trailingMarkers={this.state.trailingMarkers}
         onHeadMarkerSelect={this.handleOnHeadMarkerSelect.bind(this)}
-        onHeadMarkerDeselect={this.handleOnHeadMarkerDeselect}
+        onHeadMarkerDeselect={this.handleOnHeadMarkerDeselect.bind(this)}
         showInfoWindow={this.state.showInfoWindow}
         navigator={this.props.navigator}
         onButtonPressed={this.handleOnButtonPressed.bind(this)}
