@@ -11,7 +11,7 @@ import {
 export default class ProfileScene extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     let data = JSON.parse('{"id":"0a9ds7a767ac7vr5as4de4465464646","firstName":"Tina","lastName":"Turner","displayName":"Tina Turner","email":"tina@singer.com","birthday":"Aug 20, 1998","interestedChallenges":["d53h338383hjsjbs623yjb923u2h2939","9a7a5d5d7v8a7hwh11199dhsdjb2387y"],"completedChallenges":["6a6a5a55sdfh12j3jb1423123412jhkjs"],"createdChallenges":["6a6a5a55sdfh12j3jb1423123412jhkjs"],"created":"Mon Feb 06 2017 00:45:48 GMT-0700 (MST)"}')
     this.state = {
       userData: data,
@@ -19,17 +19,17 @@ export default class ProfileScene extends Component {
       createdCount: data.createdChallenges.length,
       profChar: data.firstName.charAt(0),
       edit: false
-    };
+    }
   }
 
   // TODO: load profile image into circle,
-  // TODO: have default but maybe customizable image behind
+  // TODO: have default but maybe customizable image behind 
 
   editDisplayName() {
     console.log('editing')
     this.setState(prevState => ({
       edit: this.state.edit ? false : true
-    }));
+    }))
   }
 
   endEdit() {
@@ -88,7 +88,7 @@ export default class ProfileScene extends Component {
           </View>
         </View>
       </View>
-    );
+    )
   }
 }
 
@@ -163,4 +163,4 @@ const styles = StyleSheet.create({
   cancelEditIcon: {
     width: 30,
     height: 30  }
-});
+})
