@@ -16,6 +16,13 @@ export default class ChallengeCreationView extends Component {
         expiration: this.props.challenge.expiration,
         locations: this.props.challenge.locations
       };
+    } else {
+      this.state = {
+        title: '',
+        description: '',
+        expiration: undefined,
+        locations: []
+      }
     }
   }
 
@@ -34,15 +41,19 @@ export default class ChallengeCreationView extends Component {
         <ScrollView>
           <View style={{height: 8}}/>
           <ExpirationInput
-            expires={this.state.expiration}
+            expiration={this.state.expiration}
+            onChange={(expiration) => this.setState({ expiration })}
           />
           <ListDivider/>
           <DescriptionInput
             description={this.state.description}
-            onChange={(description) => this.setState({description})}
+            onChange={(description) => this.setState({ description })}
           />
           <View style={{height: 8}}/>
-          <LocationsList locations={this.state.locations}/>
+          <LocationsList
+            locations={this.state.locations}
+            onChange={(locations) => this.setState({ locations })}
+          />
         </ScrollView>
         <View style={Css.footer}>
           <Text style={Css.submitButton}>SUBMIT</Text>
@@ -52,7 +63,6 @@ export default class ChallengeCreationView extends Component {
   }
 }
 
-
 ChallengeCreationView.propTypes = {
-  challenge: PropTypes.object,
+  challenge: PropTypes.object
 };

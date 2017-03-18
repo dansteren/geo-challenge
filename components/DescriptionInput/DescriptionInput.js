@@ -12,17 +12,12 @@ export default class DescriptionInput extends Component {
           autoCapitalize='sentences'
           style={Css.textInput}
           multiline={true}
-          onChangeText={(description) => this.fireReduxAction(description)}
+          onChangeText={(description) => this.props.onChange(description)}
           value={this.props.description}
           placeholder='Description'
         />
       </View>
     )
-  }
-
-  fireReduxAction(description) {
-    console.log("Text Updated: " + description);
-    this.props.onChange(description);
   }
 }
 

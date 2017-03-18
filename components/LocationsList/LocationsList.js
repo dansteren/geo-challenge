@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { LocationsListCSS as Css } from './LocationsList.css'
 import LocationCard from '../LocationCard/LocationCard'
 
@@ -25,15 +25,23 @@ export default class LocationsList extends Component {
             content={content}
           />
         }) }
-        <View style={Css.emptyCard}>
-          <Text>Add Point</Text>
-        </View>
+        <TouchableOpacity
+          onPress={() => this.openAddPointPage()}
+        >
+          <View style={Css.emptyCard}>
+            <Text>Add Point</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     )
   }
-}
 
+  openAddPointPage(){
+    console.log('Tried to open create point page');
+  }
+}
 
 LocationsList.propTypes = {
   locations: PropTypes.array,
+  onChange: PropTypes.func
 };

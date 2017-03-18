@@ -9,7 +9,7 @@ export default class ExpirationInput extends Component {
   constructor(props){
     super(props);
     this.state = {
-      expires: this.props.expires
+      expiration: this.props.expiration
     }
   }
 
@@ -20,20 +20,40 @@ export default class ExpirationInput extends Component {
           <ExpirationIcon size={24} style={Css.icon}/>
           <Text style={Css.switchLabel}>Expires</Text>
           <Switch
-            onValueChange={(value) => this.setState( value ? {expires: 'Sun, Jun 11, 2017'}: {expires: ''})}
-            value={this.state.expires ? true : false}
+            onValueChange={(value) => {
+              const expiration = value ? Date.now() : undefined;
+              this.setState({ expiration })
+              this.props.onChange(expiration);
+            } }
+            value={this.state.expiration ? true : false}
           />
         </View>
-        {renderIf(this.state.expires)(
+        {renderIf(this.state.expiration)(
           <Text style={Css.expirationDate}>
-            {this.state.expires}
+            {this.timestampToString(this.state.expiration)}
           </Text>
         )}
       </View>
     )
   }
+
+  timestampToString(timestamp) {
+    if(timestamp) {
+      const o = new Date(timestamp);
+      const day = o.getDay();
+      const month = o.getMonth();
+      const date = o.getDate();
+      const year = o.getFullYear();
+      const weekdays = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+      return weekdays[day] + ', ' + months[month] + ' ' + date + ', ' + year;
+    } else {
+      return '';
+    }
+  }
 }
 
 ExpirationInput.propTypes = {
-  expires: PropTypes.string
+  expiration: PropTypes.number,
+  onChange: PropTypes.func
 };
