@@ -27,20 +27,16 @@ export default class ProfileScene extends Component {
   // TODO: have default but maybe customizable image behind
 
   editDisplayName() {
-    console.log('editing')
     this.setState(prevState => ({
       edit: this.state.edit ? false : true
     }))
   }
 
   endEdit() {
-    console.log('end edit called')
   }
 
   // if the name goes unchanged it will be null
   submitNameChange(name) {
-    console.log('submitting')
-    console.log(name)
     if(name != undefined) {
       // change the name
     }
