@@ -49,7 +49,7 @@ export default class PartialChallengeDetailsView extends Component {
           <TouchableHighlight
             onPress={this.goToChallengeDetailScene}>
             <View style={styles.icon}>
-              <Text style={styles.profPic}>GO</Text>
+              <Text style={styles.goFab}>GO</Text>
             </View>
           </TouchableHighlight>
         </View>
@@ -85,19 +85,17 @@ const styles = StyleSheet.create({
     paddingRight: 12
   },
   title: {
-    // textAlign: 'center',
     fontWeight: 'bold',
     lineHeight: 42
   },
   description: {
     fontSize: 16
-    // fontStyle: 'italic',
   },
   createdBy: {
     fontSize: 14,
     color: 'grey'
   },
-  profPic: {
+  goFab: {
     color: '#fff',
     fontSize: 30,
   },
