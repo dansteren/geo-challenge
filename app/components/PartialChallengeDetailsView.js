@@ -15,7 +15,6 @@ export default class PartialChallengeDetailsView extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props)
 
     this.state = {
       createdBy: 'Created by '+props.challenge.owner.displayName+' on '+props.challenge.created,
