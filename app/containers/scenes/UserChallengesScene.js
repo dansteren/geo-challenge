@@ -17,7 +17,6 @@ export default class UserChallengesScene extends Component {
 
   constructor(props) {
     super(props);
-    // this.goToChallengeDetailScene = this.goToChallengeDetailScene.bind(this);
 
     this.state = {
       index: 0,
@@ -43,28 +42,15 @@ export default class UserChallengesScene extends Component {
   _renderScene = ({ route }) => {
     switch (route.key) {
     case '1':
-      return <AndroidListView/>;
-      // return <AndroidListView challenge=mockData.challenges[0] />; //props - list of challenges
+      return <AndroidListView navigator={this.props.navigator}/>;
     case '2':
-      return <AndroidListView/>;
+      return <AndroidListView navigator={this.props.navigator}/>;
     case '3':
-      return <AndroidListView/>;
+      return <AndroidListView navigator={this.props.navigator}/>;
     default:
       return null;
     }
   };
-
-  // goToChallengeDetailScene() {
-  //   var selectedChallenge = mockData.challenges[0]; // TEMP CHALLENGE MOCK
-  //
-  //   // build route
-  //   var route = ChallengeDetailRoute;
-  //   route.title = selectedChallenge.title || "Challenge";
-  //   route.passProps = {
-  //     challenge: selectedChallenge
-  //   }
-  //   this.props.navigator.push(route);
-  // }
 
   render() {
     return (
