@@ -3,12 +3,10 @@ import { View, Text, TextInput, ScrollView, Button } from 'react-native';
 
 import { ChallengeCreationCSS as Css } from './ChallengeCreationScene.css'
 import { DescriptionInput, ExpirationInput, ListDivider, LocationsList } from '../../components';
-import { LocationCreationRoute } from '../../routes/defaultRoutes'
 
 export default class ChallengeCreationScene extends Component {
   constructor(props) {
     super(props);
-    this.goToLocationCreationScene = this.goToLocationCreationScene.bind(this);
     if (this.props.challenge) {
       this.state = {
         title: this.props.challenge.title,
@@ -52,25 +50,19 @@ export default class ChallengeCreationScene extends Component {
           <View style={{height: 8}}/>
           <LocationsList
             locations={this.state.locations}
+            navigator={this.props.navigator}
             onChange={(locations) => this.setState({ locations })}
           />
         </ScrollView>
-        <Button
-          onPress={this.goToLocationCreationScene}
-          title="Go To Location Creation Scene"
-        />
         <View style={Css.footer}>
           <Text style={Css.submitButton}>SUBMIT</Text>
         </View>
       </View>
     )
   }
-
-  goToLocationCreationScene() {
-    this.props.navigator.push(LocationCreationRoute);
-  }
 }
 
 ChallengeCreationScene.propTypes = {
-  challenge: PropTypes.object
+  challenge: PropTypes.object,
+  navigator: PropTypes.object.isRequired
 };

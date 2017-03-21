@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { LocationsListCSS as Css } from './LocationsList.css'
 import LocationCard from '../LocationCard/LocationCard'
-
+import { LocationCreationRoute } from '../../routes/defaultRoutes'
+import { LocationCreationScene } from '../../containers/scenes'
 
 export default class LocationsList extends Component {
   constructor(props) {
@@ -10,6 +11,14 @@ export default class LocationsList extends Component {
     this.state = {
       locations: this.props.locations || [],
     };
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.locations.length !== this.props.locations.length){
+      this.state = {
+        locations: nextProps.locations || []
+      };
+    }
   }
 
   render() {
@@ -26,7 +35,19 @@ export default class LocationsList extends Component {
           />
         }) }
         <TouchableOpacity
-          onPress={() => this.openAddPointPage()}
+          onPress={() =>this.props.navigator.push({
+            title: 'Add Location',
+            component: LocationCreationScene,
+            leftText: '',
+            passProps: {
+              navigator: this.props.navigator,
+              onSave: (location) => {
+                let locations = this.props.locations.slice();
+                locations.push(location)
+                this.props.onChange(locations);
+              }
+            }
+          })}
         >
           <View style={Css.emptyCard}>
             <Text>Add Point</Text>
@@ -43,5 +64,6 @@ export default class LocationsList extends Component {
 
 LocationsList.propTypes = {
   locations: PropTypes.array,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  navigator: PropTypes.object.isRequired
 };
