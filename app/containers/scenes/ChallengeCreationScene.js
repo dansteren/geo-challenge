@@ -3,6 +3,8 @@ import { View, Text, TextInput, ScrollView, Button } from 'react-native';
 
 import { ChallengeCreationCSS as Css } from './ChallengeCreationScene.css'
 import { DescriptionInput, ExpirationInput, ListDivider, LocationsList } from '../../components';
+import { Colors } from '../../theme/theme';
+
 
 export default class ChallengeCreationScene extends Component {
   constructor(props) {
@@ -30,7 +32,7 @@ export default class ChallengeCreationScene extends Component {
         <TextInput
           style={Css.challengeTitle}
           autoCapitalize='sentences'
-          placeholderTextColor='#FFFFFFDE'
+          placeholderTextColor={Colors.hintTextWhite}
           underlineColorAndroid='transparent'
           onChangeText={(title) => this.setState({ title })}
           value={this.state.title}

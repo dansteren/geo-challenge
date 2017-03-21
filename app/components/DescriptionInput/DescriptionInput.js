@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { DescriptionInputCSS as Css } from './DescriptionInput.css'
 import DescriptionIcon from '../Icons/DescriptionIcon'
+import { Colors} from '../../theme/theme';
 
 export default class DescriptionInput extends Component {
   render() {
@@ -11,6 +12,7 @@ export default class DescriptionInput extends Component {
         <TextInput
           autoCapitalize='sentences'
           style={Css.textInput}
+          placeholderTextColor={Colors.hintTextBlack}
           multiline={true}
           onChangeText={(description) => this.props.onChange(description)}
           value={this.props.description}

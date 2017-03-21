@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { Colors } from '../../theme/theme';
 
 export default class ListDivider extends Component {
   render() {
@@ -9,7 +10,7 @@ export default class ListDivider extends Component {
       },
       line: {
         height: 1,
-        backgroundColor: 'rgba(0, 0, 0, .12)'
+        backgroundColor: Colors.dividerBlack
       },
       padding: {
         height: 8

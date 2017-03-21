@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
+import { Colors} from '../../theme/theme';
 
 export const LocationCardCSS = StyleSheet.create({
   card: {
     margin: 5,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.cardBackground,
     borderRadius: 2,
     elevation: 2
   },
@@ -11,7 +12,7 @@ export const LocationCardCSS = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.cardBackground,
     padding: 16
   },
   avatar: {
@@ -25,13 +26,15 @@ export const LocationCardCSS = StyleSheet.create({
   headerText: {
     flex: 1,
     flexDirection: 'column',
-    marginLeft: 12
+    marginLeft: 12,
   },
   title: {
-    fontSize: 16
+    fontSize: 16,
+    color: Colors.primaryTextBlack
   },
   subhead: {
-    fontSize: 14
+    fontSize: 14,
+    color: Colors.primaryTextBlack
   },
   rightButton: {
     height: 40,
@@ -43,6 +46,7 @@ export const LocationCardCSS = StyleSheet.create({
   },
   content: {
     padding: 16,
-    fontSize: 14
+    fontSize: 14,
+    color: Colors.primaryTextBlack
   }
 });

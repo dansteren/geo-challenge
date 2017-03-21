@@ -1,13 +1,14 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from './../../theme/theme';
 
 export const LocationCreationCSS = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.backgroundColor,
   },
   locationTitle: {
-    backgroundColor: '#FF5722',
-    color: '#FFFFFFDE',
+    backgroundColor: Colors.accentColor,
+    color: Colors.primaryTextWhite,
     paddingLeft: 16,
     paddingRight: 16,
     fontSize: 16
@@ -19,7 +20,7 @@ export const LocationCreationCSS = StyleSheet.create({
     alignItems: 'center',
     // borderTopColor: 'rgba(0,0,0,.2)',
     // borderTopWidth: 1,
-    backgroundColor: '#FF5722',
+    backgroundColor: Colors.accentColor,
   },
   addButton: {
     fontSize: 14,
@@ -30,6 +31,6 @@ export const LocationCreationCSS = StyleSheet.create({
     marginLeft: 8,
     marginRight: 8,
     borderRadius: 2,
-    color: '#FFFFFF'
+    color: Colors.primaryTextWhite
   }
 });

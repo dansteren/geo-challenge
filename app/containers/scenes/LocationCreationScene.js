@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
-
 import { LocationCreationCSS as Css } from './LocationCreationScene.css'
+import { Colors } from '../../theme/theme';
 
 export default class LocationCreationScene extends Component {
 
@@ -37,7 +37,7 @@ export default class LocationCreationScene extends Component {
         <TextInput
           style={Css.locationTitle}
           autoCapitalize='sentences'
-          placeholderTextColor='#FFFFFFDE'
+          placeholderTextColor={Colors.hintTextWhite}
           underlineColorAndroid='transparent'
           onChangeText={(title) => this.setState({ title })}
           value={this.state.title}

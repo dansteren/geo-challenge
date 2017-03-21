@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from '../../theme/theme';
 
 export const ExpirationInputCSS = StyleSheet.create({
   expirationInput: {
@@ -19,7 +20,7 @@ export const ExpirationInputCSS = StyleSheet.create({
     flex: 1,
     textAlignVertical: 'center',
     fontSize: 16,
-    color: '#000000DE'
+    color: Colors.primaryTextBlack
   },
   switch: {
 
@@ -30,6 +31,6 @@ export const ExpirationInputCSS = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
     fontSize: 16,
-    color: '#000000DE'
+    color: Colors.primaryTextBlack
   }
 });
