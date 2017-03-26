@@ -20,6 +20,8 @@ export default class ChallengesMapView extends Component {
 		this.state = {
 			bounceValue: new Animated.Value(200),
 		};
+		console.log("MapView")
+		console.log(props)
 		this.goToChallengeCreationScene = this.goToChallengeCreationScene.bind(this);
 		this._movePartialView = this._movePartialView.bind(this);
 		this.onHeadMarkerPress = this.onHeadMarkerPress.bind(this);
@@ -110,11 +112,9 @@ export default class ChallengesMapView extends Component {
 				</View>
 				<Animated.View
 					style={[styles.partialViewContainer,{transform: [{translateY: this.state.bounceValue}]}]} >
-					 <PartialChallengeDetailsView
+					 {this.props.selectedChallenge && <PartialChallengeDetailsView
 						challenge={this.props.selectedChallenge} 
-						imageSrc={this.props.mapSnapshot} 
-						initialRegion={this.props.initialRegion} 
-						navigator={this.props.navigator} />
+						navigator={this.props.navigator} />}
 				</Animated.View>
 			</View>
 		)
@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
 		bottom: 0,
 	},
 	partialViewContainer: {
+		backgroundColor: "white",
 		position: "absolute",
 		bottom: 0,
 		left: 0,
