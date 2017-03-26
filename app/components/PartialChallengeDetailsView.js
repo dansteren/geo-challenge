@@ -15,8 +15,6 @@ export default class PartialChallengeDetailsView extends Component {
 
   constructor(props) {
     super(props);
-    console.log("challenge")
-    console.log(this.props)
     this.state = {
       createdBy: 'Created by '+props.challenge.owner.displayName+' on '+props.challenge.created,
       completedBy: 'Completed by '+props.challenge.completedBy.length+(props.challenge.completedBy.length != 1 ? ' users' : ' user')
