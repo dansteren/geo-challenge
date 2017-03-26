@@ -2,88 +2,153 @@ import React, { Component, PropTypes } from 'react';
 import {
 	StyleSheet,
 	View,
-	Text,
-	Button
+	Animated,
+	Easing
 } from 'react-native';
 
 import MapView from 'react-native-maps';
-import PartialChallengeDetailsView from './PartialChallengeDetailsView'
-import { ChallengeCreationRoute } from '../routes/defaultRoutes'
+import PartialChallengeDetailsView from './PartialChallengeDetailsView';
+import FloatingActionButton from './FloatingActionButton'
+import { ChallengeCreationRoute } from '../routes/defaultRoutes';
 import primaryMarkerImage from '../assets/primary-marker.png';
 import secondaryMarkerImage from '../assets/secondary-marker.png';
 
-function ChallengesMapView(props) {
+export default class ChallengesMapView extends Component {
 
-	function onHeadMarkerSelect(e) {
-		props.onHeadMarkerSelect(e.nativeEvent.id);
+	constructor(props) {
+		super(props);
+		this.state = {
+			bounceValue: new Animated.Value(200),
+		};
+		this.goToChallengeCreationScene = this.goToChallengeCreationScene.bind(this);
+		this._movePartialView = this._movePartialView.bind(this);
+		this.onHeadMarkerPress = this.onHeadMarkerPress.bind(this);
 	}
 
-	function onHeadMarkerDeselect(e) {
-		props.onHeadMarkerDeselect(e.nativeEvent.id);
+	onHeadMarkerPress(e) {
+		var challengeId = e.nativeEvent.id;
+		if(!this.props.selectedChallenge || challengeId !== this.props.selectedChallenge.id) {
+			this._movePartialView(true);
+			if(this.props.onPrimaryMarkerSelect) {
+				this.props.onPrimaryMarkerSelect(challengeId);
+			}
+		}
+		else {
+			this._movePartialView(false);
+			if(this.props.onPrimaryMarkerDeselect) {
+				this.props.onPrimaryMarkerDeselect(challengeId);
+			}
+		}
 	}
 
-	function goToChallengeCreationScene() {
-		props.navigator.push(ChallengeCreationRoute)
+	_movePartialView(open) {
+
+		var toValue = 200;
+
+		if(open) {
+			toValue = 0;
+		}
+
+		Animated.spring(
+			this.state.bounceValue,
+			{
+				toValue: toValue,
+				velocity: 10,
+				tension: 2,
+				friction: 8,
+			}
+		).start();
 	}
 
-	return (
-		<View style={styles.container}>
-			<View style={{flex:1}}>
-				<MapView
-					style={styles.map}
-					initialRegion={props.initialRegion}
-					loadingEnabled
-				>
-					{props.headMarkers.map(marker => (
+	goToChallengeCreationScene() {
+		this.props.navigator.push(ChallengeCreationRoute)
+	}
+
+	render() {
+		return (
+			<View style={styles.container}>
+				<View style={{flex:1}}>
+					<MapView
+						style={styles.map}
+						loadingEnabled={true}
+						showUserLocation={true}
+						initialRegion={this.props.initialRegion}
+					>
+					{this.props.primaryMarkers.map((marker, index) => (
 						<MapView.Marker 
-							key={marker.title} // <-- should be unique id
-							identifier={marker.challengeId}
+							key={index}
+							identifier={marker.id}
 							coordinate={marker.latlng}
-							title={marker.title}
 							image={primaryMarkerImage}
-							onPress={onHeadMarkerSelect}
-							onSelect={onHeadMarkerSelect}
-							onDeselect={onHeadMarkerDeselect}
+							onPress={this.onHeadMarkerPress}
 						/>
 					))}
-					{props.trailingMarkers.map(marker => (
+					{this.props.secondaryMarkers.map((marker, index) => (
 						<MapView.Marker
-							key={marker.title}
-							identifier={marker.title}
+							key={index}
+							identifier={marker.id}
 							coordinate={marker.latlng}
-							title={marker.title}
 							image={secondaryMarkerImage}
 						/>
 					))}
-					{props.selectedChallenge &&
+					{this.props.selectedChallenge &&
 						<MapView.Polyline
 							key="selectedChallengeRoute"
-							coordinates={props.selectedChallenge.locations}
+							coordinates={this.props.selectedChallenge.locations}
 							strokeColor="#F00"
 							fillColor="rgba(255,0,0,0.5)"
 							strokeWidth={2}
 						/>}
-				</MapView>
-				<Button style={styles.createChallengeButton}
-          onPress={goToChallengeCreationScene}
-          title="+"
-          />
+					</MapView>
+					<View style={{position:'absolute'}}>
+						<FloatingActionButton 
+							onPress={this.goToChallengeCreationScene}
+							title="+"
+							backgroundColor="#33AAFF" 
+							color="#FFFFFF" />
+					</View>
+				</View>
+				<Animated.View
+					style={[styles.partialViewContainer,{transform: [{translateY: this.state.bounceValue}]}]} >
+					 <PartialChallengeDetailsView
+						challenge={this.props.selectedChallenge} 
+						imageSrc={this.props.mapSnapshot} 
+						initialRegion={this.props.initialRegion} 
+						navigator={this.props.navigator} />
+				</Animated.View>
 			</View>
-			{props.showInfoWindow && 
-				<PartialChallengeDetailsView 
-					challenge={props.selectedChallenge} 
-					imageSrc={props.mapSnapshot} 
-					initialRegion={props.initialRegion} 
-					navigator={props.navigator}>
-				</PartialChallengeDetailsView>
-			}
-		</View>
-	)
+		)
+	}
 }
 
 ChallengesMapView.propTypes = {
-	challenges: PropTypes.array,
-	onButtonPressed: PropTypes.func.isRequired
+	initialRegion: PropTypes.shape({
+			latitude: PropTypes.number.isRequired,
+			longitude: PropTypes.number.isRequired,
+			latitudeDelta: PropTypes.number.isRequired,
+			longitudeDelta: PropTypes.number.isRequired,
+	}),
+	selectedChallenge: PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		locations: PropTypes.array.isRequired
+	}),
+	primaryMarkers: PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		latlng: PropTypes.shape({
+			latitude: PropTypes.number.isRequired,
+			longitude: PropTypes.number.isRequired
+		})
+	})),
+	secondaryMarkers: PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		latlng: PropTypes.shape({
+			latitude: PropTypes.number.isRequired,
+			longitude: PropTypes.number.isRequired
+		})
+	})),
+	onPrimaryMarkerSelect: PropTypes.func,
+	onPrimaryMarkerDeselect: PropTypes.func,
+	navigator: PropTypes.object.isRequired
 }
 
 const styles = StyleSheet.create({
@@ -98,17 +163,12 @@ const styles = StyleSheet.create({
 		right: 0,
 		bottom: 0,
 	},
-	createChallengeButton: {
-		position:"absolute", 
-		width:50, 
-		height:50, 
-		bottom: 10, 
-		right: 0, 
-		borderRadius: 25, 
-		borderStyle: "solid",
-		fontSize: 72
+	partialViewContainer: {
+		position: "absolute",
+		bottom: 0,
+		left: 0,
+		right: 0,
+		height: 200,
 	}
 });
-
-module.exports = ChallengesMapView;
 

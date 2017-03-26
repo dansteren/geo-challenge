@@ -41,53 +41,51 @@ export default class PartialChallengeDetailsView extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        {!this.props.challenge ? 
-          <ActivityIndicator
-            animating={true}
-            style={[styles.centering, {height: 80}]}
-            size="large"
-          /> : 
-          <MapView
-            ref = { (MapRef) => {if( MapRef !=null ) { MapRef.fitToElements(true) }} }
-            style={styles.map}
-            cacheEnabled={true}
-            loadingEnabled
-           >
-            {this.props.challenge.locations.map(location => (
-              <MapView.Marker 
-                key={location.title}
-                identifier={location.challengeId}
-                coordinate={{latitude: location.latitude, longitude: location.longitude}}
-                title={location.title}
-                image={secondaryMarkerImage}
-              />
-            ))}
-           </MapView>
-        }
-        <Text>
-          <Text style={{fontWeight: 'bold'}}>Challenge: </Text>
-          {this.props.challenge.title}
-        </Text>
-        <Text>
-          <Text style={{fontWeight: 'bold'}}>GPS Points: </Text>
-          <Text>{this.props.challenge.locations.length}</Text>
-        </Text>
-        <Text>
-          <Text style={{fontWeight: 'bold'}}>Completed by: </Text>
-          {this.props.challenge.completedBy.length} user{this.props.challenge.completedBy.length > 1 && <Text>s</Text>}
-        </Text>
-        <Button 
-          onPress={this.goToChallengeDetailScene}
-          title="Go to Challenge Detail Scene"
-          />
+      <View style={styles.overlay}>
+        {this.props.challenge && <View style={styles.container}>
+          {!this.props.challenge ? 
+            <ActivityIndicator
+              animating={true}
+              style={[styles.centering, {height: 80}]}
+              size="large"
+            /> : 
+            <MapView
+              ref = { (MapRef) => {if( MapRef !=null ) { MapRef.fitToElements(true) }} }
+              style={styles.map}
+              cacheEnabled={true}
+              loadingEnabled
+             >
+              {this.props.challenge.locations.map(location => (
+                <MapView.Marker 
+                  key={location.title}
+                  identifier={location.challengeId}
+                  coordinate={{latitude: location.latitude, longitude: location.longitude}}
+                  title={location.title}
+                  image={secondaryMarkerImage}
+                />
+              ))}
+             </MapView>
+          }
+          <Text>
+            <Text style={{fontWeight: 'bold'}}>Challenge: </Text>
+            {this.props.challenge.title}
+          </Text>
+          <Text>
+            <Text style={{fontWeight: 'bold'}}>GPS Points: </Text>
+            <Text>{this.props.challenge.locations.length}</Text>
+          </Text>
+          <Text>
+            <Text style={{fontWeight: 'bold'}}>Completed by: </Text>
+            {this.props.challenge.completedBy.length} user{this.props.challenge.completedBy.length > 1 && <Text>s</Text>}
+          </Text>
+          <Button 
+            onPress={this.goToChallengeDetailScene}
+            title="Go to Challenge Detail Scene"
+            />
+        </View>}
       </View>
     );
   }
-}
-
-PartialChallengeDetailsView.propTypes = {
-  challenge: PropTypes.object.isRequired
 }
 
 const styles = StyleSheet.create({
@@ -100,6 +98,12 @@ const styles = StyleSheet.create({
   map: {
     width: 100,
     height: 100
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   }
-
 });
