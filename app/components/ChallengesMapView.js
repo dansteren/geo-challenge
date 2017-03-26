@@ -20,8 +20,7 @@ export default class ChallengesMapView extends Component {
 		this.state = {
 			bounceValue: new Animated.Value(200),
 		};
-		console.log("MapView")
-		console.log(props)
+
 		this.goToChallengeCreationScene = this.goToChallengeCreationScene.bind(this);
 		this._movePartialView = this._movePartialView.bind(this);
 		this.onHeadMarkerPress = this.onHeadMarkerPress.bind(this);

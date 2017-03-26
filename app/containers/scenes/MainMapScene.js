@@ -29,14 +29,13 @@ export default class MainMapScene extends Component {
 		this.handleOnHeadMarkerSelect = this.handleOnHeadMarkerSelect.bind(this);
 		this.handleOnHeadMarkerDeselect = this.handleOnHeadMarkerDeselect.bind(this);
 		this.handleOnButtonPressed = this.handleOnButtonPressed.bind(this);
+		this._loadMap = this._loadMap.bind(this);
+		this._tempMapServerDataToMockData = this._tempMapServerDataToMockData.bind(this);
 	}
 
 	componentDidMount() {
-		// set challenge start location markers
-		this._initializeChallengeStartMarkers();
-
-		// set up location monitoring
-		this._setCurrentUserLocation();
+		// load user location and challenges
+		this._loadMap();
 	}
 
 	handleOnHeadMarkerSelect(challengeId) {
@@ -44,7 +43,7 @@ export default class MainMapScene extends Component {
 		var selectedChallenge = this._getSelectedChallengeById(challengeId, this.state.challenges);
 
 		// get trailing markers for selected challenge
-		var trailingMarkers = this._getTrailingMarkersForChallenge(selectedChallenge);
+		var trailingMarkers = this._createTrailingMarkersForChallenge(selectedChallenge);
 
 		// set new state with selected challenge and trailing markers
 		this.setState({
@@ -88,19 +87,68 @@ export default class MainMapScene extends Component {
 		);
 	}
 
-	_initializeChallengeStartMarkers() {
-		var challenges = mockData.challenges; // TEMP MOCK DATA
-		var headMarkers = this._getHeadMarkers(challenges);
+	_tempMapServerDataToMockData(challenges) {
+
+		challenges.map((challenge, index) => {
+			challenge.id = challenge.id.toString();
+			challenge.locations = challenge.points;
+			challenge.owner = {
+				"id": "0a9ds7a767ac7vr5as4de4465464646",
+				"displayName": "Tina Turner"
+			};
+			challenge.completedBy = [
+				{
+					"id": "1s12fa1243g3kok6800llpmc1q76",
+					"user": "Billy Bob",
+					"message": "Text"
+				}
+			];
+			challenge.created = challenge.dateCreated;
+			return challenge;
+		});
+		return challenges;
+	}
+
+	_loadChallengesForLocation(location, radius) {
+		let longitude = location.longitude;
+		let latitude = location.latitude;
+		var url = "http://enexia.com:10000/geo-challenge/challenge/search?token=geo-ninjas";
+		url += ("&longitude=" + longitude);
+		url += ("&latitude=" + latitude);
+		url += ("&radius=" + radius);
+		fetch(url)
+			.then((response) => response.json())
+			.then((responseJson) => {
+				var challenges = responseJson.challenges;
+				// TEMP map data to new keys and inject missing data //
+				challenges = this._tempMapServerDataToMockData(challenges);
+				// END DATA MANIPULATION //
+
+				// set challenges
+				this.setState({
+					challenges: challenges
+				});
+
+				// set challenge start location markers
+				this._setHeadMarkers(challenges);
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+	}
+
+	_setHeadMarkers(challenges) {
+		var headMarkers = this._createHeadMarkers(challenges);
 		this.setState({
-			headMarkers: headMarkers,
-			challenges: challenges
+			headMarkers: headMarkers
 		});
 	}
 
-	_getHeadMarkers(challenges) {
+	_createHeadMarkers(challenges) {
+
 		var headMarkers = challenges.map(challenge => (
 			{
-				id: challenge.id,
+				id: challenge.id || challenge.title,
 				title: challenge.locations[0].title,
 				chalengeDescription: challenge.description,
 				latlng: {
@@ -109,11 +157,10 @@ export default class MainMapScene extends Component {
 				},
 			}
 		));
-
 		return headMarkers;
 	}
 
-	_getTrailingMarkersForChallenge(challenge) {
+	_createTrailingMarkersForChallenge(challenge) {
 		var trailingMarkers = challenge.locations.slice(1).map((location, index) => (
 			{
 				id: challenge.id + "-" + (index+1),
@@ -128,22 +175,34 @@ export default class MainMapScene extends Component {
 		return trailingMarkers;
 	}
 
-	_setCurrentUserLocation() {
-		this.watchId = navigator.geolocation.getCurrentPosition(
+	_loadMap() {
+		navigator.geolocation.getCurrentPosition(
 			(position) => {
-				this.setState({
-					userLocation: {
+				let userLocation = {
 						latitude: position.coords.latitude,
 						longitude: position.coords.longitude,
 						latitudeDelta: LATITUDE_DELTA,
-						longitudeDelta: LONGITUDE_DELTA,
-						error: null
+						longitudeDelta: LONGITUDE_DELTA
+				}
+				// set user location
+				this.setState({
+					userLocation: userLocation
+				});
+
+				// load challenges near user
+				let miles = 50;
+				this._loadChallengesForLocation(userLocation, miles * 1600)
+			}, 
+			(error) => {
+				this.setState({
+					userLocation:{ 
+						error: error.message 
 					}
 				});
 			},
-			(error) => this.setState({userLocation:{ error: error.message }}),
 			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
 		);
+
 	}
 }
 
