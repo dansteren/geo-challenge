@@ -15,7 +15,6 @@ export default class PartialChallengeDetailsView extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       createdBy: 'Created by '+props.challenge.owner.displayName+' on '+props.challenge.created,
       completedBy: 'Completed by '+props.challenge.completedBy.length+(props.challenge.completedBy.length != 1 ? ' users' : ' user')
@@ -59,10 +58,6 @@ export default class PartialChallengeDetailsView extends Component {
       </View>
     );
   }
-}
-
-PartialChallengeDetailsView.propTypes = {
-  challenge: PropTypes.object.isRequired
 }
 
 const styles = StyleSheet.create({

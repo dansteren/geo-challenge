@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-	AppRegistry,
 	Navigator,
 	Text,
 	Button
@@ -11,7 +10,7 @@ import defaultRoutes, { LoginRoute } from '../routes/defaultRoutes'
 export default class GCNavigator extends Component {
 
 	renderScene(route, navigator) {
-		return <route.component navigator={navigator} {...route.passProps} />
+		return <route.component navigator={navigator} {...route.passProps}/>
 	}
 
 	render() {
@@ -44,7 +43,7 @@ export default class GCNavigator extends Component {
 					// if we are at top of stack and there isn't a new route to go to for the right button press,
 					// or, if the route has no text for the right button
 					// return nothing
-					if((index === 0 && !route.rightRoute) || !route.rightText) {
+					if((index === 0 && !route.rightRoute) || !route.rightText && route.rightText !== "") {
 						return;
 					}
 					function onRightPress() {
@@ -79,19 +78,3 @@ export default class GCNavigator extends Component {
 		);
 	}
 }
-
-				// configureScene={function(route, routeStack) {
-				// 	if(route.comingFrom === "left") {
-    // 				return Navigator.SceneConfigs.HorizontalSwipeJumpFromLeft
-				// 	}
-				// 	if(route.comingFrom === "right") {
-    // 				return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight
-				// 	}
-				// 	if(route.comingFrom === "top") {
-    // 				return Navigator.SceneConfigs.VerticalUpSwipeJump
-				// 	}
-				// 	if(route.comingFrom === "bottom") {
-    // 				return Navigator.SceneConfigs.VerticalDownSwipeJump
-				// 	}
-				// 	return Navigator.SceneConfigs.FloatFromBottom
-    // 		}}

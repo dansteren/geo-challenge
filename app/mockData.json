@@ -6,37 +6,34 @@
 			"description": "Great view. Waterfall at the top with some pools.",
 			"locations": [
 				{
-					"longitude": -122.4324,
-					"latitude": 37.78825,
+					"longitude": -111.651963,
+					"latitude": 40.251664,
 					"title": "Welcome!",
 					"content": {
 						"text": "It's time to begin your journey",
 						"image": "image/url/something/whatevs",
 						"video": "video/url/something/whatevs"
 					},
-					"lockType": "auto"
 				},
 				{
-					"longitude": -122.4354,
-					"latitude": 37.78425,
+					"longitude": -111.650963,
+					"latitude": 40.251964,
 					"title": "Half way there!",
 					"content": {
 						"text": null,
 						"image": "image/url/something/whatevs",
 						"video": "video/url/something/whatevs"
 					},
-					"lockType": "auto"
 				},
 				{
-					"longitude": -122.4384,
-					"latitude": 37.77025,
+					"longitude": -111.652063,
+					"latitude": 40.252664,
 					"title": "You Finshed!",
 					"content": {
 						"text": "It's done",
 						"image": "image/url/something/whatevs",
 						"video": "video/url/something/whatevs"
 					},
-					"lockType": "auto"
 				}
 
 			],
@@ -60,28 +57,25 @@
 			"description": "For extreme hikers only.",
 			"locations": [
 				{
-					"longitude": -122.4220,
-					"latitude": 37.78720,
+					"longitude": -111.649963,
+					"latitude": 40.253964,
 					"title": "In the beginning...",
 					"content": {
 						"text": "You're a star!",
 						"image": "image/url/something/whatevs",
 						"video": "video/url/something/whatevs"
 					},
-					"lockType": "auto"
 				},
 				{
-					"longitude": -122.4270,
-					"latitude": 37.78920,
+					"longitude": -111.649363,
+					"latitude": 40.252964,
 					"title": "Ta-dah!",
 					"content": {
 						"text": "It's done",
 						"image": "image/url/something/whatevs",
 						"video": "video/url/something/whatevs"
 					},
-					"lockType": "auto"
 				}
-
 			],
 			"owner": {
 				"id": "0a9ds7a767ac7vr5as4de4465464646",
@@ -103,26 +97,24 @@
 			"description": "You'll never know...",
 			"locations": [
 				{
-					"longitude": -122.4430,
-					"latitude": 37.78930,
+					"longitude": -111.646963,
+					"latitude": 40.250864,
 					"title": "It all starts here!",
 					"content": {
 						"text": "Here we go...",
 						"image": "image/url/something/whatevs",
 						"video": "video/url/something/whatevs"
 					},
-					"lockType": "auto"
 				},
 				{
-					"longitude": -122.4030,
-					"latitude": 37.78980,
+					"longitude": -111.648963,
+					"latitude": 40.248864,
 					"title": "The last one",
 					"content": {
 						"text": "I can't believe it!",
 						"image": "image/url/something/whatevs",
 						"video": "video/url/something/whatevs"
 					},
-					"lockType": "auto"
 				}
 
 			],
