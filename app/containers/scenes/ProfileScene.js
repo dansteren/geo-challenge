@@ -23,24 +23,6 @@ export default class ProfileScene extends Component {
     }
   }
 
-  // TODO: load profile image into circle,
-  // TODO: have default but maybe customizable image behind
-
-  editDisplayName() {
-    this.setState(prevState => ({
-      edit: this.state.edit ? false : true
-    }))
-  }
-
-  endEdit() {
-  }
-
-  // if the name goes unchanged it will be null
-  submitNameChange(name) {
-    if(name != undefined) {
-      // change the name
-    }
-  }
   render() {
     return (
       <View style={{flex: 1}}>
@@ -54,33 +36,7 @@ export default class ProfileScene extends Component {
             </View>
           </View>
           <View style={styles.bottomText}>
-            {
-              !this.state.edit ?
-              <Text style={styles.displayName}>{this.state.userData.displayName}
-                <TouchableHighlight
-                  onPress={() => this.editDisplayName()}
-                  style={styles.editIconTH}>
-                  <Image style={styles.editIcon}
-                    source={{uri:'https://iconshow.me/media/images/ui/ios7-icons/png/48/compose_1.png'}}/>
-                </TouchableHighlight>
-              </Text>
-              :
-              <TextInput
-                style={styles.displayNameEdit}
-                defaultValue={this.state.userData.displayName}
-                maxLength={18}
-                keyboardType='default'
-                returnKeyType='done'
-                ref='NameInput'
-                onSubmitEditing={() => this.submitNameChange(this.refs.NameInput._lastNativeText)}>
-                  <TouchableHighlight
-                    onPress={() => this.editDisplayName()}
-                    style={styles.cancelEditIconTH}>
-                    <Image style={styles.cancelEditIcon}
-                      source={{uri:'https://iconshow.me/media/images/ui/ios7-icons/png/128/undo.png'}}/>
-                  </TouchableHighlight>
-              </TextInput>
-            }
+            <Text style={styles.displayName}>{this.state.userData.displayName}</Text>
             <Text style={styles.textBelow}>Challenges Completed: {this.state.completedCount}</Text>
             <Text style={styles.textBelow}>Challenges Created: {this.state.createdCount}</Text>
           </View>
