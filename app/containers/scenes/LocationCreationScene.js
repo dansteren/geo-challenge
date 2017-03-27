@@ -43,11 +43,34 @@ export default class LocationCreationScene extends Component {
           value={this.state.title}
           placeholder='Enter a title for this location'
         />
+        <TextInput
+          keyboardType='numeric'
+          placeholderTextColor={Colors.hintTextBlack}
+          underlineColorAndroid='transparent'
+          onChangeText={(latitude) => this.setState({latitude})}
+          value={this.state.latitude}
+          placeholder='Latitude'
+        />
+        <TextInput
+          keyboardType='numeric'
+          placeholderTextColor={Colors.hintTextBlack}
+          underlineColorAndroid='transparent'
+          onChangeText={(longitude) => this.setState({longitude})}
+          value={this.state.longitude}
+          placeholder='Longitude'
+        />
+        <TextInput
+          placeholderTextColor={Colors.hintTextBlack}
+          underlineColorAndroid='transparent'
+          onChangeText={(text) => this.setState({content: {text}})}
+          value={this.state.content.text}
+          placeholder='Content'
+        />
         <TouchableOpacity
           onPress={() => {
             this.props.onSave({
-              'longitude': this.state.longitude,
-              'latitude': this.state.latitude,
+              'longitude': parseFloat(this.state.longitude),
+              'latitude': parseFloat(this.state.latitude),
               'title': this.state.title,
               'content': {
                 'text': this.state.content.text,

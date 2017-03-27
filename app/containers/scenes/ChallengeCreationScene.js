@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import { View, Text, TextInput, ScrollView, Button } from 'react-native';
+import { View, Text, TextInput, ScrollView, Button, TouchableOpacity } from 'react-native';
 
 import { ChallengeCreationCSS as Css } from './ChallengeCreationScene.css'
 import { DescriptionInput, ExpirationInput, ListDivider, LocationsList } from '../../components';
 import { Colors } from '../../theme/theme';
-
+import * as GeoServer from '../../services/GeoServer';
 
 export default class ChallengeCreationScene extends Component {
   constructor(props) {
@@ -56,9 +56,20 @@ export default class ChallengeCreationScene extends Component {
             onChange={(locations) => this.setState({ locations })}
           />
         </ScrollView>
+        <TouchableOpacity
+          onPress={() => GeoServer.createChallenge({
+              title: this.state.title,
+              description: this.state.description,
+              points: this.state.locations
+            },
+            () => {this.props.navigator.pop()},
+            (error) => {console.log('Error: ', error)},
+          )}
+        >
         <View style={Css.footer}>
           <Text style={Css.submitButton}>SUBMIT</Text>
         </View>
+        </TouchableOpacity>
       </View>
     )
   }
