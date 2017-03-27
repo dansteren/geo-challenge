@@ -113,28 +113,32 @@ export default class MainMapScene extends Component {
 		let longitude = location.longitude;
 		let latitude = location.latitude;
 		var url = "http://enexia.com:10000/geo-challenge/challenge/search?token=geo-ninjas";
-		url += ("&longitude=" + longitude);
-		url += ("&latitude=" + latitude);
-		url += ("&radius=" + radius);
-		fetch(url)
-			.then((response) => response.json())
-			.then((responseJson) => {
-				var challenges = responseJson.challenges;
-				// TEMP map data to new keys and inject missing data //
-				challenges = this._tempMapServerDataToMockData(challenges);
-				// END DATA MANIPULATION //
+		let formdata = new FormData();
+		formdata.append("longitude", longitude);
+		formdata.append("latitude", latitude);
+		formdata.append("radius", radius);
+		fetch(url ,{ 
+			method: 'post',
+			body: formdata
+		})
+		.then((response) => response.json())
+		.then((responseJson) => {
+			var challenges = responseJson.challenges;
+			// TEMP map data to new keys and inject missing data //
+			challenges = this._tempMapServerDataToMockData(challenges);
+			// END DATA MANIPULATION //
 
-				// set challenges
-				this.setState({
-					challenges: challenges
-				});
+			// set challenges
+			this.setState({
+				challenges: challenges
+			});
 
-				// set challenge start location markers
-				this._setHeadMarkers(challenges);
-			})
-			.catch((error) => {
-				console.log(error);
-			})
+			// set challenge start location markers
+			this._setHeadMarkers(challenges);
+		})
+		.catch((error) => {
+			console.log(error);
+		})
 	}
 
 	_setHeadMarkers(challenges) {
