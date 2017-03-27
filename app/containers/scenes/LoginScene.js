@@ -5,6 +5,9 @@ import {
   Button
 } from 'react-native';
 
+var Auth0Lock = require('react-native-lock');
+var lock = new Auth0Lock({clientId: "3gcF9a9rBPEqemQhZgNKbEEqICemgqWr", domain: ""});
+
 import { MainMapRoute } from '../../routes/defaultRoutes'
 
 export default class LoginScene extends Component {
@@ -12,6 +15,7 @@ export default class LoginScene extends Component {
   constructor(props) {
     super(props);
     this.goToMainMapScene = this.goToMainMapScene.bind(this);
+    console.log(lock);
   }
 
   goToMainMapScene() {
@@ -24,7 +28,7 @@ export default class LoginScene extends Component {
     return (
       <View>
         <Text style={{textAlign:"center"}}>[Login Scene]</Text>
-        <Button 
+        <Button
           onPress={this.goToMainMapScene}
           title="Login"
           />
