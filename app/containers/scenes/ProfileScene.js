@@ -64,21 +64,22 @@ export default class ProfileScene extends Component {
                     source={{uri:'https://iconshow.me/media/images/ui/ios7-icons/png/48/compose_1.png'}}/>
                 </TouchableHighlight>
               </Text>
-              : <TextInput
-                  style={styles.displayNameEdit}
-                  defaultValue={this.state.userData.displayName}
-                  maxLength={18}
-                  keyboardType='default'
-                  returnKeyType='done'
-                  ref='NameInput'
-                  onSubmitEditing={() => this.submitNameChange(this.refs.NameInput._lastNativeText)}>
-                    <TouchableHighlight
-                      onPress={() => this.editDisplayName()}
-                      style={styles.cancelEditIconTH}>
-                      <Image style={styles.cancelEditIcon}
-                        source={{uri:'https://iconshow.me/media/images/ui/ios7-icons/png/128/undo.png'}}/>
-                    </TouchableHighlight>
-                </TextInput>
+              :
+              <TextInput
+                style={styles.displayNameEdit}
+                defaultValue={this.state.userData.displayName}
+                maxLength={18}
+                keyboardType='default'
+                returnKeyType='done'
+                ref='NameInput'
+                onSubmitEditing={() => this.submitNameChange(this.refs.NameInput._lastNativeText)}>
+                  <TouchableHighlight
+                    onPress={() => this.editDisplayName()}
+                    style={styles.cancelEditIconTH}>
+                    <Image style={styles.cancelEditIcon}
+                      source={{uri:'https://iconshow.me/media/images/ui/ios7-icons/png/128/undo.png'}}/>
+                  </TouchableHighlight>
+              </TextInput>
             }
             <Text style={styles.textBelow}>Challenges Completed: {this.state.completedCount}</Text>
             <Text style={styles.textBelow}>Challenges Created: {this.state.createdCount}</Text>
