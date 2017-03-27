@@ -15,7 +15,7 @@ export default class LocationCard extends Component {
           </View>
           <View style={Css.headerText}>
             <Text style={Css.title}>{this.props.title}</Text>
-            <Text style={Css.subhead}>{this.props.longitude + ', ' + this.props.latitude}</Text>
+            <Text style={Css.subhead}>{this.props.latitude + ', ' + this.props.longitude}</Text>
           </View>
           <View style={Css.rightButton}>
             <MoreVertIcon size={24}/>
