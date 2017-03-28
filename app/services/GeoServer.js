@@ -3,6 +3,15 @@ export async function createChallenge(challenge, successCallback, failureCallbac
   let formData = new FormData();
   formData.append('token', 'geo-ninjas');
   formData.append('user', 3);
+  // TODO: get the userId from AsyncStorage. Waiting on authentication scene.
+  // try {
+  //   const userId = await AsyncStorage.getItem('userId');
+  //   if (userId !== null){
+  //     formData.append('user', userId);
+  //   }
+  // } catch (error) {
+  //   failureCallback('Authentication error. Try signing in again.');
+  // }
   formData.append('challenge', JSON.stringify(challenge));
   try {
     const response = await fetch('http://enexia.com:10000/geo-challenge/challenge/create', {
