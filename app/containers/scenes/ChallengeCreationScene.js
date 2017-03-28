@@ -60,6 +60,7 @@ export default class ChallengeCreationScene extends Component {
           onPress={() => GeoServer.createChallenge({
               title: this.state.title,
               description: this.state.description,
+              expires: this.state.expiration,
               points: this.state.locations
             },
             () => {this.props.navigator.pop()},

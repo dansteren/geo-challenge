@@ -21,7 +21,9 @@ export default class ExpirationInput extends Component {
           <Text style={Css.switchLabel}>Expires</Text>
           <Switch
             onValueChange={(value) => {
-              const expiration = value ? Date.now() : undefined;
+              // TODO: allow the user to choose the expiration date.
+              // currently hard coded to expire in 6 months (as expressed in miliseconds)
+              const expiration = value ? Date.now() + 7884000000 : undefined;
               this.setState({ expiration })
               this.props.onChange(expiration);
             } }

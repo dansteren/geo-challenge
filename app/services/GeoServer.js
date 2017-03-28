@@ -35,7 +35,7 @@ export function getErrorMessage(error) {
     case 'missing_title':
       return 'missing title';
     case 'expires_not_long_number':
-      return '';
+      return 'invalid expiration format';
     case 'missing_points':
       return 'missing point';
     case 'point_gps_invalid':
