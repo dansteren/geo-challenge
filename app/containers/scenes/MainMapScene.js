@@ -112,8 +112,9 @@ export default class MainMapScene extends Component {
 	_loadChallengesForLocation(location, radius) {
 		let longitude = location.longitude;
 		let latitude = location.latitude;
-		var url = "http://enexia.com:10000/geo-challenge/challenge/search?token=geo-ninjas";
+		var url = "http://enexia.com:10000/geo-challenge/challenge/search";
 		let formdata = new FormData();
+		formdata.append("token", "geo-ninjas");
 		formdata.append("longitude", longitude);
 		formdata.append("latitude", latitude);
 		formdata.append("radius", radius);
