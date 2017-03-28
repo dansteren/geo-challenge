@@ -10,23 +10,17 @@ export default class LocationCreationScene extends Component {
     const location = this.props.location;
     if (location) {
       this.state = {
-        longitude: location.longitude,
-        latitude: location.latitude,
         title: location.latitude,
+        latitude: location.latitude,
+        longitude: location.longitude,
         content: location.content,
-        lockType: location.lockType
       }
     } else {
       this.state = {
-        longitude: undefined,
-        latitude: undefined,
         title: '',
-        content: {
-          text: '',
-          image: '',
-          video: ''
-        },
-        lockType: 'auto'
+        latitude: undefined,
+        longitude: undefined,
+        content: '',
       }
     }
   }
@@ -61,6 +55,7 @@ export default class LocationCreationScene extends Component {
         />
         <TextInput
           placeholderTextColor={Colors.hintTextBlack}
+          autoCapitalize='sentences'
           underlineColorAndroid='transparent'
           onChangeText={(text) => this.setState({content: {text}})}
           value={this.state.content.text}
@@ -69,15 +64,10 @@ export default class LocationCreationScene extends Component {
         <TouchableOpacity
           onPress={() => {
             this.props.onSave({
-              'longitude': parseFloat(this.state.longitude),
-              'latitude': parseFloat(this.state.latitude),
               'title': this.state.title,
-              'content': {
-                'text': this.state.content.text,
-                'image': this.state.content.image,
-                'video': this.state.content.video
-              },
-              'lockType': this.state.lockType
+              'latitude': parseFloat(this.state.latitude),
+              'longitude': parseFloat(this.state.longitude),
+              'content': this.state.content.text
             });
             this.props.navigator.pop();
           }}

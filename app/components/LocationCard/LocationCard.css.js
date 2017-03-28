@@ -6,7 +6,8 @@ export const LocationCardCSS = StyleSheet.create({
     margin: 5,
     backgroundColor: Colors.cardBackground,
     borderRadius: 2,
-    elevation: 2
+    elevation: 2,
+    height: 274
   },
   header: {
     flex: 1,

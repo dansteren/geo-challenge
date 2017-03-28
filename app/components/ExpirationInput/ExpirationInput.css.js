@@ -32,5 +32,9 @@ export const ExpirationInputCSS = StyleSheet.create({
     paddingBottom: 15,
     fontSize: 16,
     color: Colors.primaryTextBlack
+  },
+  hidden: {
+    opacity: 0,
+    height: 0
   }
 });

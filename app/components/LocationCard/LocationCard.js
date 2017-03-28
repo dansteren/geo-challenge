@@ -22,7 +22,7 @@ export default class LocationCard extends Component {
           </View>
         </View>
         <View style={Css.mapPlaceholder}/>
-        <Text style={Css.content}>{this.props.content.text ? this.props.content.text : 'no content'}</Text>
+        <Text style={Css.content}>{this.props.content ? this.props.content : 'no content'}</Text>
       </View>
     )
   }
@@ -33,5 +33,5 @@ LocationCard.propTypes = {
   title: PropTypes.string,
   latitude: PropTypes.number,
   longitude: PropTypes.number,
-  content: PropTypes.object
+  content: PropTypes.string
 };

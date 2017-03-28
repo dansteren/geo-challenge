@@ -3,8 +3,6 @@ import { View, Text, TextInput, Switch } from 'react-native';
 import { ExpirationInputCSS as Css } from './ExpirationInput.css'
 import ExpirationIcon from '../Icons/ExpirationIcon'
 
-import renderIf from './renderIf'
-
 export default class ExpirationInput extends Component {
   constructor(props){
     super(props);
@@ -30,11 +28,9 @@ export default class ExpirationInput extends Component {
             value={this.state.expiration ? true : false}
           />
         </View>
-        {renderIf(this.state.expiration)(
-          <Text style={Css.expirationDate}>
-            {this.timestampToString(this.state.expiration)}
-          </Text>
-        )}
+        <Text style={this.state.expiration ? Css.expirationDate : Css.hidden}>
+          {this.timestampToString(this.state.expiration)}
+        </Text>
       </View>
     )
   }

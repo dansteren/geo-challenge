@@ -64,7 +64,7 @@ export default class ChallengeCreationScene extends Component {
               points: this.state.locations
             },
             () => {this.props.navigator.pop()},
-            (error) => {console.log('Error: ', error)},
+            (error) => {console.log('Error: ', error)}, // TODO: Show a toast
           )}
         >
         <View style={Css.footer}>
