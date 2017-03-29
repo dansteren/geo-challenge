@@ -74,11 +74,11 @@ export default class MainMapScene extends Component {
 	render() {
 		return (
 			<View style={{flex:1}}>
-				{this.state.userLocation && <ChallengesMapView 
+				{this.state.userLocation && <ChallengesMapView
 					initialRegion={this.state.userLocation}
 					selectedChallenge={this.state.selectedChallenge}
-					primaryMarkers={this.state.headMarkers} 
-					secondaryMarkers={this.state.trailingMarkers} 
+					primaryMarkers={this.state.headMarkers}
+					secondaryMarkers={this.state.trailingMarkers}
 					onPrimaryMarkerSelect={this.handleOnHeadMarkerSelect}
 					onPrimaryMarkerDeselect={this.handleOnHeadMarkerDeselect}
 					navigator={this.props.navigator}
@@ -118,7 +118,7 @@ export default class MainMapScene extends Component {
 		formdata.append("longitude", longitude);
 		formdata.append("latitude", latitude);
 		formdata.append("radius", radius);
-		fetch(url ,{ 
+		fetch(url ,{
 			method: 'post',
 			body: formdata
 		})
@@ -166,18 +166,20 @@ export default class MainMapScene extends Component {
 	}
 
 	_createTrailingMarkersForChallenge(challenge) {
-		var trailingMarkers = challenge.locations.slice(1).map((location, index) => (
-			{
-				id: challenge.id + "-" + (index+1),
-				title: location.title,
-				chalengeDescription: challenge.description,
-				latlng: {
-					latitude: location.latitude,
-					longitude: location.longitude
-				},
-			}
-		));
-		return trailingMarkers;
+		if(challenge.locations && challenge.locations.length > 1) {
+			var trailingMarkers = challenge.locations.slice(1).map((location, index) => (
+				{
+					id: challenge.id + "-" + (index+1),
+					title: location.title,
+					chalengeDescription: challenge.description,
+					latlng: {
+						latitude: location.latitude,
+						longitude: location.longitude
+					},
+				}
+			));
+			return trailingMarkers;
+		} else return [];
 	}
 
 	_loadMap() {
@@ -197,11 +199,11 @@ export default class MainMapScene extends Component {
 				// load challenges near user
 				let miles = 50;
 				this._loadChallengesForLocation(userLocation, miles * 1600)
-			}, 
+			},
 			(error) => {
 				this.setState({
-					userLocation:{ 
-						error: error.message 
+					userLocation:{
+						error: error.message
 					}
 				});
 			},
