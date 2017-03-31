@@ -19,7 +19,10 @@ export default class LoginScene extends Component {
 
   constructor(props) {
     super(props);
-    console.log(lock);
+    this.showLoginScreen();
+  }
+
+  showLoginScreen() {
 
     lock.show({
       disableSignUp: true,
@@ -28,8 +31,8 @@ export default class LoginScene extends Component {
         scope: "openid email offline_access",
       },
     }, (err, profile, token) => {
-      if (err) {
-        console.log(err);
+      if(err) {
+        console.error(err);
         return;
       }
 
