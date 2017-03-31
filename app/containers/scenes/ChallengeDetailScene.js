@@ -19,8 +19,8 @@ import CoordinatesView from '../../components/ChallengeDetailComponents/Coordina
 import VisitorView from '../../components/ChallengeDetailComponents/VisitorView'
 import NumberCompleteView from '../../components/ChallengeDetailComponents/NumberCompleteView'
 import DescriptionView from '../../components/ChallengeDetailComponents/DescriptionView'
-import ChallengeStartView from '../../components/ChallengeDetailComponents/ChallengeStartView'
-import GeneralDetView from '../../components/ChallengeDetailComponents/GeneralDetView'
+import ChallengeStartButton from '../../components/ChallengeDetailComponents/ChallengeStartButton'
+import GeneralDetailView from '../../components/ChallengeDetailComponents/GeneralDetailView'
 
 import secondaryMarkerImage from '../../assets/secondary-marker.png';
 
@@ -53,8 +53,8 @@ export default class ChallengeDetailScene extends Component {
         </MapView>
         <ScrollView style={{flex: 0.75}}>
           {/*Challenge Start View will go to start a challenge page once it is set up, right now it is commented out*/}
-          <ChallengeStartView challenge={this.props.challenge} navigator={this.props.navigator}/>
-          <GeneralDetView challenge = {this.props.challenge} />
+          <ChallengeStartButton challenge={this.props.challenge} navigator={this.props.navigator}/>
+          <GeneralDetailView challenge = {this.props.challenge} />
           <CoordinatesView challenge={this.props.challenge} navigator={this.props.navigator}/>
           <NumberCompleteView challenge={this.props.challenge} />
           <DescriptionView challenge={this.props.challenge} />

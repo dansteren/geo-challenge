@@ -8,10 +8,13 @@ import {
 
 import accountmultiple from '../../assets/accountmultiple.png';
 
-export default class NumCompleted extends Component {
+export default class NumberCompleteView extends Component {
+
+
+
   render() {
     return (
-    <View style = {styles.NumCompletedSty}>
+    <View style = {styles.numcompletedarea}>
       <Image
         style = {{width: 25, height: 25}}
         source = {accountmultiple}/>
@@ -32,10 +35,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  NumCompletedSty: {
+  numcompletedarea: {
     flex:1,
     flexDirection: 'row',
-        
+
   },
 
 });

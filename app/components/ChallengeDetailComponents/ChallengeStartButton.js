@@ -11,19 +11,19 @@ import {
 import { MainMapRoute } from '../../routes/defaultRoutes'
 import run from '../../assets/run.png';
 
-export default class StartChallenge extends Component {
+export default class ChallengeStartButton extends Component {
   constructor(props) {
     super(props);
     this.goToMainMapScene = this.goToMainMapScene.bind(this);
   }
   goToMainMapScene(challenge) {
-    var selectedLocation = challenge; // TEMP MOCK DATA
+    //var selectedLocation = challenge; // TEMP MOCK DATA
 
     // build route
     var route = MainMapRoute;
-    route.title = selectedLocation.title || route.title;
+    route.title = challenge.title || route.title;
     route.passProps = {
-      location: selectedLocation
+      location: challenge
     }
     this.props.navigator.push(route);
   }
@@ -32,7 +32,7 @@ export default class StartChallenge extends Component {
       <View>
       {/*<TouchableHighlight onPress={()=>this.goToMainMapScene(this.props.challenge)}>*/}
           <View>
-              <Image 
+              <Image
                   style = {{width: 25, height: 25}}
                   source= {run}/>
           </View>

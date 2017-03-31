@@ -7,15 +7,15 @@ import {
   Image
 } from 'react-native';
 
-import informationvariant from '../../assets/informationvariant.png';
+import informationVariant from '../../assets/informationvariant.png';
 
-export default class Description1 extends Component {
+export default class DescriptionView extends Component {
   render() {
     return (
-    <View style = {styles.Description1Sty}>
+    <View style = {styles.descriptionarea}>
       <Image
         style = {{width: 25, height: 25}}
-        source = {informationvariant}/>
+        source = {informationVariant}/>
       <Text>     {this.props.challenge.description}</Text>
     </View>
     );
@@ -29,9 +29,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  Description1Sty: {
+  descriptionarea: {
     flex:1,
     flexDirection: 'row',
-    
+
   },
 });
