@@ -5,6 +5,9 @@ import {
 
 import GCNavigator from './app/containers/GCNavigator'
 
+
+var LockReactApp = require('./app/containers/app');
+
 export default class GeoChallenges extends Component {
 	render() {
 		return (
