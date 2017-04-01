@@ -22,9 +22,6 @@ export const ExpirationInputCSS = StyleSheet.create({
     fontSize: 16,
     color: Colors.primaryTextBlack
   },
-  switch: {
-
-  },
   expirationDate: {
     paddingLeft: 72,
     paddingRight: 16,
