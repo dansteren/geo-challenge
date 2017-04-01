@@ -71,12 +71,12 @@ export default class ChallengesMapView extends Component {
 				<View style={{flex:1}}>
 					<MapView
 						style={styles.map}
-						loadingEnabled={true}
-						showUserLocation={true}
+						loadingEnabled={false}
+						showsUserLocation={true}
 						initialRegion={this.props.initialRegion}
 					>
 					{this.props.primaryMarkers.map((marker, index) => (
-						<MapView.Marker 
+						<MapView.Marker
 							key={index}
 							identifier={marker.id}
 							coordinate={marker.latlng}
@@ -102,17 +102,17 @@ export default class ChallengesMapView extends Component {
 						/>}
 					</MapView>
 					<View style={{position:'absolute'}}>
-						<FloatingActionButton 
+						<FloatingActionButton
 							onPress={this.goToChallengeCreationScene}
 							title="+"
-							backgroundColor="#33AAFF" 
+							backgroundColor="#33AAFF"
 							color="#FFFFFF" />
 					</View>
 				</View>
 				<Animated.View
 					style={[styles.partialViewContainer,{transform: [{translateY: this.state.bounceValue}]}]} >
 					 {this.props.selectedChallenge && <PartialChallengeDetailsView
-						challenge={this.props.selectedChallenge} 
+						challenge={this.props.selectedChallenge}
 						navigator={this.props.navigator} />}
 				</Animated.View>
 			</View>
