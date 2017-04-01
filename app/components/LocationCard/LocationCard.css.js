@@ -41,8 +41,7 @@ export const LocationCardCSS = StyleSheet.create({
     height: 40,
     justifyContent: 'center'
   },
-  mapPlaceholder: {
-    backgroundColor: '#9E9E9E',
+  map: {
     height: 150,
   },
   content: {
