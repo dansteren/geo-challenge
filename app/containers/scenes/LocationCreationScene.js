@@ -10,7 +10,7 @@ export default class LocationCreationScene extends Component {
     const location = this.props.location;
     if (location) {
       this.state = {
-        title: location.latitude,
+        title: location.title,
         latitude: location.latitude,
         longitude: location.longitude,
         content: location.content,
