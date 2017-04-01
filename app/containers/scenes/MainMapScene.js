@@ -166,20 +166,18 @@ export default class MainMapScene extends Component {
 	}
 
 	_createTrailingMarkersForChallenge(challenge) {
-		if(challenge.locations && challenge.locations.length > 1) {
-			var trailingMarkers = challenge.locations.slice(1).map((location, index) => (
-				{
-					id: challenge.id + "-" + (index+1),
-					title: location.title,
-					chalengeDescription: challenge.description,
-					latlng: {
-						latitude: location.latitude,
-						longitude: location.longitude
-					},
-				}
-			));
-			return trailingMarkers;
-		} else return [];
+		var trailingMarkers = challenge.locations.slice(1).map((location, index) => (
+			{
+				id: challenge.id + "-" + (index+1),
+				title: location.title,
+				chalengeDescription: challenge.description,
+				latlng: {
+					latitude: location.latitude,
+					longitude: location.longitude
+				},
+			}
+		));
+		return trailingMarkers;
 	}
 
 	_loadMap() {
