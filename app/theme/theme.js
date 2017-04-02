@@ -1,0 +1,18 @@
+export const Colors =  {
+  primaryColor:           '#F5F5F5',
+  accentColor:            '#FF5722',
+  backgroundColor:        '#FAFAFA',
+  cardBackground:         '#FFFFFF',
+  primaryTextBlack:       'rgba(0  ,0  ,0  ,.87)',
+  secondaryTextBlack:     'rgba(0  ,0  ,0  ,.54)',
+  disabledTextBlack:      'rgba(0  ,0  ,0  ,.38)',
+  hintTextBlack:          'rgba(0  ,0  ,0  ,.38)',
+  dividerBlack:           'rgba(0  ,0  ,0  ,.12)',
+  primaryTextWhite:       'rgba(255,255,255,255)',
+  secondaryTextWhite:     'rgba(255,255,255,.70)',
+  disabledTextWhite:      'rgba(255,255,255,.50)',
+  hintTextWhite:          'rgba(255,255,255,.87)',
+  dividerWhite:           'rgba(255,255,255,.12)',
+  activeIcon:             'rgba(0  ,0  ,0  ,.54)',
+  inactiveIcon:           'rgba(0  ,0  ,0  ,.38)',
+}
