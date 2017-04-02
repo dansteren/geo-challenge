@@ -26,8 +26,7 @@ export default class ChallengesMapView extends Component {
 		this.onHeadMarkerPress = this.onHeadMarkerPress.bind(this);
 	}
 
-	onHeadMarkerPress(e) {
-		var challengeId = e.nativeEvent.id;
+	onHeadMarkerPress(challengeId) {
 		if(!this.props.selectedChallenge || challengeId !== this.props.selectedChallenge.id) {
 			this._movePartialView(true);
 			if(this.props.onPrimaryMarkerSelect) {
@@ -71,17 +70,17 @@ export default class ChallengesMapView extends Component {
 				<View style={{flex:1}}>
 					<MapView
 						style={styles.map}
-						loadingEnabled={true}
-						showUserLocation={true}
+						loadingEnabled={false}
+						showsUserLocation={true}
 						initialRegion={this.props.initialRegion}
 					>
 					{this.props.primaryMarkers.map((marker, index) => (
-						<MapView.Marker 
+						<MapView.Marker
 							key={index}
 							identifier={marker.id}
 							coordinate={marker.latlng}
 							image={primaryMarkerImage}
-							onPress={this.onHeadMarkerPress}
+							onPress={() => this.onHeadMarkerPress(marker.id)}
 						/>
 					))}
 					{this.props.secondaryMarkers.map((marker, index) => (
@@ -102,17 +101,17 @@ export default class ChallengesMapView extends Component {
 						/>}
 					</MapView>
 					<View style={{position:'absolute'}}>
-						<FloatingActionButton 
+						<FloatingActionButton
 							onPress={this.goToChallengeCreationScene}
 							title="+"
-							backgroundColor="#33AAFF" 
+							backgroundColor="#33AAFF"
 							color="#FFFFFF" />
 					</View>
 				</View>
 				<Animated.View
 					style={[styles.partialViewContainer,{transform: [{translateY: this.state.bounceValue}]}]} >
 					 {this.props.selectedChallenge && <PartialChallengeDetailsView
-						challenge={this.props.selectedChallenge} 
+						challenge={this.props.selectedChallenge}
 						navigator={this.props.navigator} />}
 				</Animated.View>
 			</View>
