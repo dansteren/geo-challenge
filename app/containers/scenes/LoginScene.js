@@ -1,13 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
-  Text,
   View,
-  Image,
-  TouchableHighlight,
-  Alert,
-  Button,
   AsyncStorage
 } from 'react-native';
 
@@ -19,19 +13,17 @@ import { MainMapRoute } from '../../routes/defaultRoutes';
 export default class LoginScene extends Component {
 
   constructor(props) {
-
     super(props);
   }
 
   componentDidMount() {
-
     this.checkIfLoggedIn();
   }
 
   showLoginScreen() {
 
     // the options set makes it impossible to create an account unless you use google or facebook
-    lock.show({
+     lock.show({
       disableSignUp: true,
       disableResetPassword: true,
       authParams: {
@@ -42,8 +34,8 @@ export default class LoginScene extends Component {
         console.error(err);
         return;
       }
-      let response = this.createNewUser(profile.name, profile.userId);
 
+      let response = this.createNewUser(profile.name, profile.userId);
       if(!response.success) switch (response.error) {
         case 'duplicate_surrogateId':
           // user already exists
@@ -74,7 +66,6 @@ export default class LoginScene extends Component {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log(responseJson);
       return responseJson;
     })
     .catch((err) => {
@@ -84,20 +75,17 @@ export default class LoginScene extends Component {
 
   async storeData(name, surrogateId, id) {
     try {
-
       await AsyncStorage.setItem('username', name);
       await AsyncStorage.setItem('surrogateId', surrogateId)
       await AsyncStorage.setItem('id', id);
     }
     catch(err) {
-      console.log('can\'t save data');
       console.error(err);
     }
   }
 
   async checkIfLoggedIn() {
     try {
-
       const username = await AsyncStorage.getItem('username');
       const id = await AsyncStorage.getItem('id');
 
@@ -109,7 +97,7 @@ export default class LoginScene extends Component {
       }
     }
     catch(err) {
-      console.log(err);
+      // would potentially hit this if username and id were not in AsyncStorage
       this.showLoginScreen();
     }
   }
