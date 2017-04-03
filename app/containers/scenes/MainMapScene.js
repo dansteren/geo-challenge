@@ -142,7 +142,7 @@ export default class MainMapScene extends Component {
 				});
 			},
 			(error) => this.setState({userLocation:{ error: error.message }}),
-			{ enableHighAccuracy: true, timeout: 200000, maximumAge: 1000, distanceFilter: 10 },
+			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
 		);
 	}
 }
