@@ -75,11 +75,11 @@ export default class MainMapScene extends Component {
 	render() {
 		return (
 			<View style={{flex:1}}>
-				{this.state.userLocation && <ChallengesMapView 
+				{this.state.userLocation && <ChallengesMapView
 					initialRegion={this.state.userLocation}
 					selectedChallenge={this.state.selectedChallenge}
-					primaryMarkers={this.state.headMarkers} 
-					secondaryMarkers={this.state.trailingMarkers} 
+					primaryMarkers={this.state.headMarkers}
+					secondaryMarkers={this.state.trailingMarkers}
 					onPrimaryMarkerSelect={this.handleOnHeadMarkerSelect}
 					onPrimaryMarkerDeselect={this.handleOnHeadMarkerDeselect}
 					navigator={this.props.navigator}
@@ -142,7 +142,7 @@ export default class MainMapScene extends Component {
 				});
 			},
 			(error) => this.setState({userLocation:{ error: error.message }}),
-			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
+			{ enableHighAccuracy: true, timeout: 200000, maximumAge: 1000, distanceFilter: 10 },
 		);
 	}
 }

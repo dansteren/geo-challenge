@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   ListView,
   StyleSheet,
   Text,
@@ -97,5 +96,3 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   }
 });
-
-// AppRegistry.registerComponent('androidListView', () => androidListView);

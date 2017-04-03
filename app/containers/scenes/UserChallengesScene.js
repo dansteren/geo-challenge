@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 import { ChallengeDetailRoute } from '../../routes/defaultRoutes'
-import AndroidListView from '../../components/AndroidListView'
+import AndroidListView from '../../components/ChallengesListView'
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 
 
@@ -42,11 +42,11 @@ export default class UserChallengesScene extends Component {
   _renderScene = ({ route }) => {
     switch (route.key) {
     case '1':
-      return <AndroidListView navigator={this.props.navigator}/>;
+      return <ChallengesListView navigator={this.props.navigator}/>;
     case '2':
-      return <AndroidListView navigator={this.props.navigator}/>;
+      return <ChallengesListView navigator={this.props.navigator}/>;
     case '3':
-      return <AndroidListView navigator={this.props.navigator}/>;
+      return <ChallengesListView navigator={this.props.navigator}/>;
     default:
       return null;
     }
