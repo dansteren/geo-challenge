@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 import { ChallengeDetailRoute } from '../../routes/defaultRoutes'
-import AndroidListView from '../../components/ChallengesListView'
+import ChallengesListView from '../../components/ChallengesListView'
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 
 

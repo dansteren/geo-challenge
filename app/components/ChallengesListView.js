@@ -9,8 +9,10 @@ import {
 
 import mockData from '../mockData.json' // TEMP
 import { ChallengeDetailRoute } from '../routes/defaultRoutes'
+import GeoServer from 'ChallengesServer';
 
-export default class AndroidListView extends Component {
+
+export default class ChallengesListView extends Component {
   constructor(props) {
     super(props);
     this.goToChallengeDetailScene = this.goToChallengeDetailScene.bind(this);
@@ -42,7 +44,14 @@ export default class AndroidListView extends Component {
         dataSource={rows}
         renderRow={(rowData) =>
           <View style={styles.rowContainer}>
-            <TouchableHighlight onPress={this.goToChallengeDetailScene}>
+            <TouchableHighlight
+                // onPress={this.goToChallengeDetailScene}
+
+                onPress={() => Ch.getChallenges(
+                  () => {this.props.navigator.pop()},
+                  (error) => {console.log('Error: ', error)}, // TODO: Show a toast
+                )}
+            >
               <View style={styles.textContainer}>
                 <Text style={styles.title}>{rowData.title}</Text>
                 <Text style={styles.desc} numberOfLines={1}>{rowData.description}</Text>
