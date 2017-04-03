@@ -9,7 +9,7 @@ import {
 
 import mockData from '../mockData.json' // TEMP
 import { ChallengeDetailRoute } from '../routes/defaultRoutes'
-import GeoServer from 'ChallengesServer';
+import * as GeoServer from './ChallengesServer';
 
 
 export default class ChallengesListView extends Component {
