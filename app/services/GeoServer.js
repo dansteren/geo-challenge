@@ -29,6 +29,30 @@ export async function createChallenge(challenge, successCallback, failureCallbac
   }
 }
 
+
+export async function getChallenges() {
+  let formData = new FormData();
+  formData.append('token', 'geo-ninjas');
+  formData.append('user', 3);
+
+  try{
+    const response = await fetch('http://enexia.com:10000/geo-challenge/challenge/search', {
+      method: 'POST', //GET?
+      body: formData
+    })
+    const responseJson = await response.json();
+    if(responseJson.success) {
+      return responseJson.challenges;
+    } else {
+      return undefined;
+    }
+  } catch (e){
+    failureCallback(e);
+  }
+}
+
+
+
 export function getErrorMessage(error) {
   switch(error) {
     case 'auth_failure':

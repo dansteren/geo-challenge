@@ -9,7 +9,6 @@ import {
 
 import mockData from '../mockData.json' // TEMP
 import { ChallengeDetailRoute } from '../routes/defaultRoutes'
-import * as GeoServer from './ChallengesServer';
 
 
 export default class ChallengesListView extends Component {
@@ -19,42 +18,32 @@ export default class ChallengesListView extends Component {
     this.dataSource = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     })
-    this.state = {
-      mockData: mockData.challenges
-    };
+
   }
 
-  goToChallengeDetailScene() {
-    var selectedChallenge = mockData.challenges[0]; // TEMP CHALLENGE MOCK
-
+  goToChallengeDetailScene(challenge) {
     // build route
     var route = ChallengeDetailRoute;
-    route.title = selectedChallenge.title || "Challenge";
+    route.title = challenge.title || "Challenge";
     route.passProps = {
-      challenge: selectedChallenge
+      challenge: challenge
     }
     this.props.navigator.push(route);
   }
 
   render() {
-    const rows = this.dataSource.cloneWithRows(this.state.mockData || [])
+    const rows = this.dataSource.cloneWithRows(this.props.challenges || [])
     return (
 
       <ListView
         dataSource={rows}
-        renderRow={(rowData) =>
+        enableEmptySections={true}
+        renderRow={(challenge) =>
           <View style={styles.rowContainer}>
-            <TouchableHighlight
-                // onPress={this.goToChallengeDetailScene}
-
-                onPress={() => Ch.getChallenges(
-                  () => {this.props.navigator.pop()},
-                  (error) => {console.log('Error: ', error)}, // TODO: Show a toast
-                )}
-            >
+            <TouchableHighlight onPress={()=>this.goToChallengeDetailScene(challenge)}>
               <View style={styles.textContainer}>
-                <Text style={styles.title}>{rowData.title}</Text>
-                <Text style={styles.desc} numberOfLines={1}>{rowData.description}</Text>
+                <Text style={styles.title}>{challenge.title}</Text>
+                <Text style={styles.desc} numberOfLines={1}>{challenge.description}</Text>
               </View>
             </TouchableHighlight>
           </View>

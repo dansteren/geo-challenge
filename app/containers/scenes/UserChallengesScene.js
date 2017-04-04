@@ -8,7 +8,8 @@ import {
 
 import { ChallengeDetailRoute } from '../../routes/defaultRoutes'
 import ChallengesListView from '../../components/ChallengesListView'
-import { TabViewAnimated, TabBar } from 'react-native-tab-view';
+import { TabViewAnimated, TabBar } from 'react-native-tab-view'
+import * as GeoServer from '../../services/GeoServer';
 
 
 import mockData from '../../mockData.json' // TEMP
@@ -29,6 +30,19 @@ export default class UserChallengesScene extends Component {
 
   }
 
+  componentDidMount() {
+    GeoServer.getChallenges().then((challenges)=>{
+      this.setState({createdChallenges: challenges});
+    })
+
+    GeoServer.getChallenges().then((challenges)=>{
+      this.setState({interestedChallenges: challenges});
+    })
+
+    GeoServer.getChallenges().then((challenges)=>{
+      this.setState({completedChallenges: challenges});
+    })
+  }
 
 
   _handleChangeTab = (index) => {
@@ -42,11 +56,11 @@ export default class UserChallengesScene extends Component {
   _renderScene = ({ route }) => {
     switch (route.key) {
     case '1':
-      return <ChallengesListView navigator={this.props.navigator}/>;
+      return <ChallengesListView navigator={this.props.navigator} challenges={this.state.createdChallenges}/>;
     case '2':
-      return <ChallengesListView navigator={this.props.navigator}/>;
+      return <ChallengesListView navigator={this.props.navigator} challenges={this.state.interestedChallenges}/>;
     case '3':
-      return <ChallengesListView navigator={this.props.navigator}/>;
+      return <ChallengesListView navigator={this.props.navigator} challenges={this.state.completedChallenges}/>;
     default:
       return null;
     }
@@ -54,16 +68,12 @@ export default class UserChallengesScene extends Component {
 
   render() {
     return (
-      <TabViewAnimated onPress={this.goToChallengeDetailScene}
+      <TabViewAnimated
         style={styles.container}
         navigationState={this.state}
         renderScene={this._renderScene}
         renderHeader={this._renderHeader}
         onRequestChangeTab={this._handleChangeTab} />
-    // <Button
-    //   onPress={this.goToChallengeDetailScene}
-    //   title="Go To Challenge Detail Scene"
-    //   />
     );
   }
 
