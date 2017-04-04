@@ -25,11 +25,15 @@ export default class LocationCreationScene extends Component {
     } else {
       this.state = {
         title: '',
-        latitude: undefined,
-        longitude: undefined,
+        latitude: 40.248660, // TODO: this defaults to BYU Campus
+        longitude: -111.649194, // TODO: handle this more gracefully
         content: '',
       }
     }
+  }
+
+  componentDidMount() {
+    this.getCurrentPosition();
   }
 
   render() {
@@ -46,10 +50,9 @@ export default class LocationCreationScene extends Component {
         />
         <MapView
           style={Css.map}
-          showsUserLocation={true}
-          initialRegion={this.getMapRegionByLocation() || {
-            latitude: 40.248660, // TODO: this defaults to BYU Campus
-            longitude: -111.649194, // TODO: handle this more gracefully
+          initialRegion={{
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA
           }}
@@ -89,17 +92,15 @@ export default class LocationCreationScene extends Component {
     );
   }
 
-  getMapRegionByLocation(){
+  getCurrentPosition(){
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
-				return {
-						latitude: position.coords.latitude,
-						longitude: position.coords.longitude,
-						latitudeDelta: LATITUDE_DELTA,
-						longitudeDelta: LONGITUDE_DELTA
-				};
-			},
-			(error) => undefined,
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      },
+			(error) => {}
 		);
   }
 
