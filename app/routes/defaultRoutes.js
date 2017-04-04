@@ -6,6 +6,7 @@ import ChallengeDetailScene from '../containers/scenes/ChallengeDetailScene'
 import LocationDetailScene from '../containers/scenes/LocationDetailScene'
 import ChallengeCreationScene from '../containers/scenes/ChallengeCreationScene'
 import LocationCreationScene from '../containers/scenes/LocationCreationScene'
+import ChallengeTracker from '../containers/scenes/ChallengeTracker/ChallengeTracker'
 
 module.exports.LoginRoute = {
 	component: LoginScene
@@ -53,5 +54,11 @@ module.exports.ChallengeCreationRoute = {
 module.exports.LocationCreationRoute = {
 	title: 'New Location',
 	component: LocationCreationScene,
+	leftText: ''
+}
+
+module.exports.ChallengeTrackerRoute = {
+	title: 'Challenge',
+	component: ChallengeTracker,
 	leftText: ''
 }

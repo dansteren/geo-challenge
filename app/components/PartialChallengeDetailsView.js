@@ -9,7 +9,7 @@ import {
 
 import MapView from 'react-native-maps';
 import secondaryMarkerImage from '../assets/secondary-marker.png';
-import { ChallengeDetailRoute } from '../routes/defaultRoutes'
+import { ChallengeTrackerRoute } from '../routes/defaultRoutes'
 
 export default class PartialChallengeDetailsView extends Component {
 
@@ -28,7 +28,7 @@ export default class PartialChallengeDetailsView extends Component {
     var challenge = this.props.challenge;
 
     // build route
-    var route = ChallengeDetailRoute;
+    var route = ChallengeTrackerRoute;
     route.title = challenge.title || route.title;
     route.passProps = {
       challenge: challenge

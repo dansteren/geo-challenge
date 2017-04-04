@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 import { MainMapRoute } from '../../routes/defaultRoutes'
-
+import mockData from '../../mockData'
 export default class LoginScene extends Component {
 
   constructor(props) {

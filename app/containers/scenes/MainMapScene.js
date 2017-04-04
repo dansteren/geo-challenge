@@ -28,7 +28,6 @@ export default class MainMapScene extends Component {
 		}
 		this.handleOnHeadMarkerSelect = this.handleOnHeadMarkerSelect.bind(this);
 		this.handleOnHeadMarkerDeselect = this.handleOnHeadMarkerDeselect.bind(this);
-		this.handleOnButtonPressed = this.handleOnButtonPressed.bind(this);
 		this._loadMap = this._loadMap.bind(this);
 		this._tempMapServerDataToMockData = this._tempMapServerDataToMockData.bind(this);
 	}
@@ -65,10 +64,6 @@ export default class MainMapScene extends Component {
 			return challenge.id === challengeId;
 		});
 		return selectedChallenge;
-	}
-
-	handleOnButtonPressed() {
-		this.props.navigator.push(ChallengeDetailRoute);
 	}
 
 	render() {
@@ -118,6 +113,7 @@ export default class MainMapScene extends Component {
 		formdata.append("longitude", longitude);
 		formdata.append("latitude", latitude);
 		formdata.append("radius", radius);
+		
 		fetch(url ,{
 			method: 'post',
 			body: formdata
