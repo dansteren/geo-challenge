@@ -14,7 +14,7 @@ export const ChallengeCreationCSS = StyleSheet.create({
     fontSize: 16
   },
   footer: {
-    height: 48,
+    height: 56,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

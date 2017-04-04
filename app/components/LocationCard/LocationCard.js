@@ -5,7 +5,6 @@ import MapView from 'react-native-maps';
 import { LocationCardCSS as Css } from './LocationCard.css'
 import LocationIcon from '../Icons/LocationIcon'
 import MoreVertIcon from '../Icons/MoreVertIcon'
-import primaryMarkerImage from '../../assets/primary-marker.png';
 
 export default class LocationCard extends Component {
   render() {
@@ -16,8 +15,9 @@ export default class LocationCard extends Component {
             <LocationIcon size={24}/>
           </View>
           <View style={Css.headerText}>
-            <Text style={Css.title}>{this.props.title}</Text>
-            <Text style={Css.subhead}>{this.props.latitude + ', ' + this.props.longitude}</Text>
+            <Text style={Css.title}>{this.props.title || 'Unnamed Point'}</Text>
+            <Text style={Css.subhead}>{this.props.latitude.toFixed(6) +
+              ', ' + this.props.longitude.toFixed(6)}</Text>
           </View>
           <View style={Css.rightButton}>
             <MoreVertIcon size={24}/>
@@ -39,10 +39,14 @@ export default class LocationCard extends Component {
               latitude: this.props.latitude,
               longitude: this.props.longitude
             }}
-            image={primaryMarkerImage}
           />
         </MapView>
-        <Text style={Css.content}>{this.props.content ? this.props.content : 'no content'}</Text>
+        <Text
+          style={Css.content}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+        >
+          {this.props.content ? this.props.content : 'No content'}</Text>
       </View>
     )
   }

@@ -1,7 +1,14 @@
 import React, { Component, PropTypes } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity, Dimensions } from 'react-native';
 import { LocationCreationCSS as Css } from './LocationCreationScene.css'
 import { Colors } from '../../theme/theme';
+import MapView from 'react-native-maps';
+import { DescriptionInput } from '../../components';
+
+const screen = Dimensions.get('window');
+const ASPECT_RATIO = screen.width / 425;
+const LATITUDE_DELTA = 0.015;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class LocationCreationScene extends Component {
 
@@ -37,29 +44,31 @@ export default class LocationCreationScene extends Component {
           value={this.state.title}
           placeholder='Enter a title for this location'
         />
-        <TextInput
-          keyboardType='numeric'
-          placeholderTextColor={Colors.hintTextBlack}
-          underlineColorAndroid='transparent'
-          onChangeText={(latitude) => this.setState({latitude})}
-          value={this.state.latitude}
-          placeholder='Latitude'
-        />
-        <TextInput
-          keyboardType='numeric'
-          placeholderTextColor={Colors.hintTextBlack}
-          underlineColorAndroid='transparent'
-          onChangeText={(longitude) => this.setState({longitude})}
-          value={this.state.longitude}
-          placeholder='Longitude'
-        />
-        <TextInput
-          placeholderTextColor={Colors.hintTextBlack}
-          autoCapitalize='sentences'
-          underlineColorAndroid='transparent'
-          onChangeText={(text) => this.setState({content: {text}})}
-          value={this.state.content.text}
-          placeholder='Content'
+        <MapView
+          style={Css.map}
+          showsUserLocation={true}
+          initialRegion={this.getMapRegionByLocation() || {
+            latitude: 40.248660, // TODO: this defaults to BYU Campus
+            longitude: -111.649194, // TODO: handle this more gracefully
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA
+          }}
+          onPress={(e) => this.placeMarker(e.nativeEvent.coordinate)}
+        >
+          {this.state.latitude && this.state.longitude &&
+            <MapView.Marker
+              coordinate={{
+                latitude: this.state.latitude,
+                longitude: this.state.longitude
+              }}
+            />
+          }
+        </MapView>
+        <View style={{height: 1, backgroundColor: 'rgba(0,0,0,.2)'}}/>
+        <DescriptionInput
+          placeholder={'Leave a message'}
+          description={this.state.content}
+          onChange={(content) => this.setState({ content })}
         />
         <TouchableOpacity
           onPress={() => {
@@ -67,7 +76,7 @@ export default class LocationCreationScene extends Component {
               'title': this.state.title,
               'latitude': parseFloat(this.state.latitude),
               'longitude': parseFloat(this.state.longitude),
-              'content': this.state.content.text
+              'content': this.state.content
             });
             this.props.navigator.pop();
           }}
@@ -79,7 +88,30 @@ export default class LocationCreationScene extends Component {
       </View>
     );
   }
+
+  getMapRegionByLocation(){
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				return {
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude,
+						latitudeDelta: LATITUDE_DELTA,
+						longitudeDelta: LONGITUDE_DELTA
+				};
+			},
+			(error) => undefined,
+		);
+  }
+
+  placeMarker(location) {
+    console.log('Map Event: ', location);
+    this.setState({
+      latitude: location.latitude,
+      longitude: location.longitude
+    })
+  }
 }
+
 
 LocationCreationScene.propTypes = {
   onSave: PropTypes.func,

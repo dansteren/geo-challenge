@@ -46,6 +46,7 @@ export default class ChallengeCreationScene extends Component {
           />
           <ListDivider/>
           <DescriptionInput
+            placeholder={'Description'}
             description={this.state.description}
             onChange={(description) => this.setState({ description })}
           />

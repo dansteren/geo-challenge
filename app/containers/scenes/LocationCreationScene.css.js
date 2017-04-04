@@ -13,8 +13,11 @@ export const LocationCreationCSS = StyleSheet.create({
     paddingRight: 16,
     fontSize: 16
   },
+	map: {
+		flex: 1,
+	},
   footer: {
-    height: 48,
+    height: 56,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
