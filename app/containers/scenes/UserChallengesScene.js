@@ -39,7 +39,7 @@ export default class UserChallengesScene extends Component {
       this.setState({interestedChallenges: challenges});
     })
 
-    GeoServer.getChallenges().then((challenges)=>{
+    GeoServer.getCompleted().then((challenges)=>{
       this.setState({completedChallenges: challenges});
     })
   }
