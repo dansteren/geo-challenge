@@ -46,8 +46,8 @@ export async function getChallenges() {
     } else {
       return undefined;
     }
-  } catch (e){
-    failureCallback(e);
+  } catch (){
+    return undefined;
   }
 }
 
@@ -77,13 +77,16 @@ export async function getCompleted() {
         if(getChallResponseJson.success) {
           completedChallenges.push(getChallResponseJson.challenge);
         }
+        else {
+          return undefined;
+        }
       })
       return completedChallenges;
     } else {
       return undefined;
     }
-  } catch (e){
-    failureCallback(e);
+  } catch (){
+    return undefined;
   }
 }
 

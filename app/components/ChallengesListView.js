@@ -7,7 +7,6 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-import mockData from '../mockData.json' // TEMP
 import { ChallengeDetailRoute } from '../routes/defaultRoutes'
 
 

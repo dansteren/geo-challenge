@@ -200,7 +200,7 @@ export default class MainMapScene extends Component {
 			},
 			(error) => {
 				this.setState({
-					//hard coded value - to avoid error - change this!
+					//TODO:hard coded value - to avoid error - change this!
 					userLocation:{
 							latitude: 40.253399,
 							longitude: -111.643307,
