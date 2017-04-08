@@ -29,6 +29,69 @@ export async function createChallenge(challenge, successCallback, failureCallbac
   }
 }
 
+
+export async function getChallenges() {
+  let formData = new FormData();
+  formData.append('token', 'geo-ninjas');
+  formData.append('user', 2);  //for now
+
+  try{
+    const response = await fetch('http://enexia.com:10000/geo-challenge/challenge/search', {
+      method: 'POST',
+      body: formData
+    })
+    const responseJson = await response.json();
+    if(responseJson.success) {
+      return responseJson.challenges;
+    } else {
+      return undefined;
+    }
+  } catch (e){
+    return undefined;
+  }
+}
+
+
+export async function getCompleted() {
+  let formData = new FormData();
+  formData.append('token', 'geo-ninjas');
+  formData.append('user', 2); //for now
+
+  try{
+    const response = await fetch('http://enexia.com:10000/geo-challenge/achievement/getAllByUser', {
+      method: 'POST',
+      body: formData
+    })
+    const responseJson = await response.json();
+    if(responseJson.success) {
+      var completedChallenges = [];
+      responseJson.achievements.forEach(async (achievement)=>{
+        let getChallengeData = new FormData();
+        getChallengeData.append('token', 'geo-ninjas');
+        getChallengeData.append('challenge', achievement.challenge);
+        const getChallResponse = await fetch('http://enexia.com:10000/geo-challenge/challenge/get', {
+          method: 'POST',
+          body: getChallengeData
+        })
+        const getChallResponseJson = await getChallResponse.json();
+        if(getChallResponseJson.success) {
+          completedChallenges.push(getChallResponseJson.challenge);
+        }
+        else {
+          return undefined;
+        }
+      })
+      return completedChallenges;
+    } else {
+      return undefined;
+    }
+  } catch (e){
+    return undefined;
+  }
+}
+
+
+
 export function getErrorMessage(error) {
   switch(error) {
     case 'auth_failure':

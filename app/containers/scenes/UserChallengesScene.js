@@ -2,40 +2,91 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Button
+  Button,
+  StyleSheet
 } from 'react-native';
 
 import { ChallengeDetailRoute } from '../../routes/defaultRoutes'
+import ChallengesListView from '../../components/ChallengesListView'
+import { TabViewAnimated, TabBar } from 'react-native-tab-view'
+import * as GeoServer from '../../services/GeoServer';
+
+
 import mockData from '../../mockData.json' // TEMP
 
 export default class UserChallengesScene extends Component {
 
   constructor(props) {
     super(props);
-    this.goToChallengeDetailScene = this.goToChallengeDetailScene.bind(this);
+
+    this.state = {
+      index: 0,
+      routes: [
+        { key: '1', title: 'Created' },
+        { key: '2', title: 'Interested' },
+        { key: '3', title: 'Completed'}
+      ],
+    };
+
   }
 
-  goToChallengeDetailScene() {
-    var selectedChallenge = mockData.challenges[0]; // TEMP CHALLENGE MOCK
+  componentDidMount() {
+    GeoServer.getChallenges().then((challenges)=>{
+      this.setState({createdChallenges: challenges});
+    })
 
-    // build route
-    var route = ChallengeDetailRoute;
-    route.title = selectedChallenge.title || "Challenge";
-    route.passProps = {
-      challenge: selectedChallenge
+    GeoServer.getChallenges().then((challenges)=>{
+      this.setState({interestedChallenges: challenges});
+    })
+
+    GeoServer.getCompleted().then((challenges)=>{
+      this.setState({completedChallenges: challenges});
+    })
+  }
+
+
+  _handleChangeTab = (index) => {
+    this.setState({ index });
+  };
+
+  _renderHeader = (props) => {
+    return <TabBar {...props} />;
+  };
+
+  _renderScene = ({ route }) => {
+    switch (route.key) {
+    case '1':
+      return <ChallengesListView navigator={this.props.navigator} challenges={this.state.createdChallenges}/>;
+    case '2':
+      return <ChallengesListView navigator={this.props.navigator} challenges={this.state.interestedChallenges}/>;
+    case '3':
+      return <ChallengesListView navigator={this.props.navigator} challenges={this.state.completedChallenges}/>;
+    default:
+      return null;
     }
-    this.props.navigator.push(route);
-  }
+  };
 
   render() {
     return (
-      <View>
-        <Text style={{textAlign:"center"}}>[User Challenges Scene]</Text>
-        <Button 
-          onPress={this.goToChallengeDetailScene}
-          title="Go To Challenge Detail Scene"
-          />
-      </View>
+      <TabViewAnimated
+        style={styles.container}
+        navigationState={this.state}
+        renderScene={this._renderScene}
+        renderHeader={this._renderHeader}
+        onRequestChangeTab={this._handleChangeTab} />
     );
   }
+
+
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  page: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
