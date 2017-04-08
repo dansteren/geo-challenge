@@ -11,6 +11,7 @@ import { LocationDetailRoute } from '../../routes/defaultRoutes'
 import lockOutline from '../../assets/lock.png';
 import lockOpenOutline from '../../assets/lock-open-outline.png';
 import mapMarker from '../../assets/map-marker.png'
+import { Colors } from '../../theme/theme';
 
 export default class CoordinatesView extends Component {
 
@@ -33,7 +34,7 @@ export default class CoordinatesView extends Component {
 
 	render() {
 		return (
-		<View>
+		<View style = {{backgroundColor: Colors.backgroundColor,}}>
 				{this.props.challenge.locations.map(location => (
 					location.lockType === "auto" ?
 
@@ -52,15 +53,15 @@ export default class CoordinatesView extends Component {
 					 </TouchableHighlight>
 					:
 					<TouchableHighlight  key={location.title+location.longitude+location.latitude}>
-					 	<View style = {{flex:1, flexDirection: 'row',}} >
+					 	<View style = {{flex:1, flexDirection: 'row', height: 55,alignItems:'center',}} >
 							<Image
-								style = {{width: 25, height: 25}}
+								style = {{width: 25, height: 25, marginLeft: 12}}
 								source= {mapMarker}/>
-							<Text>     {location.longitude}</Text>
+							<Text style = {{paddingLeft: 24}}>{location.longitude}</Text>
 							<Text>, </Text>
-							<Text>{location.latitude}     </Text>
+							<Text>{location.latitude}</Text>
 							<Image
-								style = {{width: 15, height: 15}}
+								style = {{width: 15, height: 15, marginLeft: 24}}
 								source= {lockOutline}/>
 						</View>
 					 </TouchableHighlight>

@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Image
 } from 'react-native';
-
+import { Colors } from '../../theme/theme';
 import informationVariant from '../../assets/informationvariant.png';
 
 export default class DescriptionView extends Component {
@@ -14,9 +14,11 @@ export default class DescriptionView extends Component {
     return (
     <View style = {styles.descriptionarea}>
       <Image
-        style = {{width: 25, height: 25}}
+        style = {{width: 25, height: 25, marginLeft: 12}}
         source = {informationVariant}/>
-      <Text>     {this.props.challenge.description}</Text>
+      <View style = {{flex:1, flexDirection: 'column'}}>
+      <Text style = {{paddingLeft: 24, paddingRight:24, paddingVertical:16}}>{this.props.challenge.description}</Text>
+      </View>
     </View>
     );
   }
@@ -33,5 +35,7 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection: 'row',
 
+    alignItems:'center',
+    backgroundColor: Colors.backgroundColor,
   },
 });
