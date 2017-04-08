@@ -46,7 +46,7 @@ export async function getChallenges() {
     } else {
       return undefined;
     }
-  } catch (){
+  } catch (e){
     return undefined;
   }
 }
@@ -85,7 +85,7 @@ export async function getCompleted() {
     } else {
       return undefined;
     }
-  } catch (){
+  } catch (e){
     return undefined;
   }
 }
