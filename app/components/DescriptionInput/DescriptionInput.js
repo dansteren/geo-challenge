@@ -16,7 +16,7 @@ export default class DescriptionInput extends Component {
           multiline={true}
           onChangeText={(description) => this.props.onChange(description)}
           value={this.props.description}
-          placeholder='Description'
+          placeholder={this.props.placeholder || ''}
         />
       </View>
     )
@@ -24,6 +24,7 @@ export default class DescriptionInput extends Component {
 }
 
 DescriptionInput.propTypes = {
+  placeholder: PropTypes.string,
   description: PropTypes.string,
   onChange: PropTypes.func
 };
