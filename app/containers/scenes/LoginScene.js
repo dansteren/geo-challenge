@@ -21,8 +21,6 @@ export default class LoginScene extends Component {
   }
 
   showLoginScreen() {
-
-    // the options set makes it impossible to create an account unless you use google or facebook
      lock.show({
       disableSignUp: true,
       disableResetPassword: true,
@@ -35,23 +33,7 @@ export default class LoginScene extends Component {
         return;
       }
 
-      let response = this.createNewUser(profile.name, profile.userId);
-      if(!response.success) switch (response.error) {
-        case 'duplicate_surrogateId':
-          // user already exists
-          // get user's id
-          console.log('user already exists');
-          this.storeData(profile.name, profile.userId, undefined);
-          break;
-        default:
-          break;
-      }
-      else {
-        this.storeData(profile.name, profile.userId, response.id);
-      }
-
-
-      this.goToMainMapScene();
+      this.createNewUser(profile.name, profile.userId);
     });
   }
 
@@ -66,18 +48,51 @@ export default class LoginScene extends Component {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      return responseJson;
+
+      if(!responseJson.success) switch (responseJson.error) {
+        case 'duplicate_surrogateId':
+          this.getExistingUserDate(name, id)
+          break;
+        default:
+          return; // this would be bad to be reached
+      }
+      else {
+        this.storeData(responseJson.name, responseJson.userId, responseJson.id);
+        this.goToMainMapScene();
+      }
+
     })
     .catch((err) => {
       console.error(err);
     });
   }
 
+  getExistingUserDate(name, surrogateId) {
+    let formData = new FormData();
+    formData.append('token', 'geo-ninjas');
+    formData.append('surrogateId', surrogateId);
+    fetch('http://enexia.com:10000/geo-challenge/user/getId', {
+      method: 'POST',
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if(responseJson.success) {
+        this.storeData(name, surrogateId, responseJson.id);
+        this.goToMainMapScene();
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
+  }
+
   async storeData(name, surrogateId, id) {
     try {
-      await AsyncStorage.setItem('username', name);
-      await AsyncStorage.setItem('surrogateId', surrogateId)
-      await AsyncStorage.setItem('id', id);
+      await AsyncStorage.setItem('@GeoChallenges:username', name);
+      await AsyncStorage.setItem('@GeoChallenges:surrogateId', surrogateId)
+      await AsyncStorage.setItem('@GeoChallenges:id', id.toString());
     }
     catch(err) {
       console.error(err);
@@ -86,8 +101,8 @@ export default class LoginScene extends Component {
 
   async checkIfLoggedIn() {
     try {
-      const username = await AsyncStorage.getItem('username');
-      const id = await AsyncStorage.getItem('id');
+      const username = await AsyncStorage.getItem('@GeoChallenges:username');
+      const id = await AsyncStorage.getItem('@GeoChallenges:id');
 
       if(username == undefined || id == undefined) {
         this.showLoginScreen();
@@ -97,7 +112,6 @@ export default class LoginScene extends Component {
       }
     }
     catch(err) {
-      // would potentially hit this if username and id were not in AsyncStorage
       this.showLoginScreen();
     }
   }
