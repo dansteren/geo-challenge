@@ -71,7 +71,8 @@ export default class ProfileScene extends Component {
           <View>
             <Image
             style={styles.backgroundImage}
-            source={{uri:'https://firebasestorage.googleapis.com/v0/b/misviajecitos-3d2e6.appspot.com/o/capitolreef%2FUNADJUSTEDNONRAW_thumb_2a6.jpg?alt=media&token=695339ef-25ff-49d7-999f-80648ca37fcd'}}/>
+            // so this image default image doesn't actually render
+            source={{uri:'../../assets/defaultprofileimage.png'}}/>
             <View style={styles.icon}>
               <Text style={styles.profPic}>{this.state.profChar}</Text>
             </View>
