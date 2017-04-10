@@ -16,12 +16,12 @@ export default class VisitorView extends Component {
     return (
     <View>
         <ListDivider/>
-        <Text style = {{fontWeight: 'bold', fontSize: 15, paddingLeft:12,  backgroundColor: Colors.backgroundColor, paddingVertical:4, paddingBottom: 8}}>All Vistors</Text>
+        <Text style = {styles.visitortext}>All Vistors</Text>
        {this.props.challenge.completedBy.map(user => (
-         <View style = {{flexDirection:'column'}}
+         <View style = {styles.userarea}
          key = {user.id}>
           <View
-            style = {{flex:1, flexDirection: 'row', paddingVertical:4,  backgroundColor: Colors.backgroundColor}}
+            style = {styles.visitorinfo}
             >
             {/* Need to make so gets immage from users google identification*/}
             {/*<Image
@@ -29,20 +29,17 @@ export default class VisitorView extends Component {
               source = {accountCircle}/>*/}
               <View>
               <View style={styles.button}>
-                <Text style={[
-                  styles.buttonText,
-                  {color: Colors.primaryTextWhite},
-                  ]}>
+                <Text style={styles.buttonText}>
                   {user.user.charAt(0)}
                 </Text>
                </View>
 
                </View>
 
-              <View style = {{flex: 1, flexDirection: 'column'}}>
-                <Text style = {{paddingLeft: 5, paddingRight:24, fontWeight: 'bold'}}>{user.user}</Text>
-                <Text style = {{paddingLeft: 5, paddingRight:24, paddingTop:4}}>NEED THIS IN DATA weeks ago</Text>
-                <Text style = {{paddingLeft: 5, paddingRight:24, paddingTop:10}}>{user.message}</Text>
+              <View style = {styles.userarea}>
+                <Text style = {styles.username}>{user.user}</Text>
+                <Text style = {styles.weekdate}>NEED THIS IN DATA weeks ago</Text>
+                <Text style = {styles.usermessage}>{user.message}</Text>
 
               </View>
 
@@ -61,7 +58,6 @@ const styles = StyleSheet.create({
 		height: 36,
 		borderRadius: 18,
 		backgroundColor: Colors.accentColor,
-
     marginBottom: 10,
     marginLeft: 10,
     marginRight: 10,
@@ -72,6 +68,43 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		fontWeight: "bold",
 		textAlign: "center",
-		color: "#FFFFFF"
-	}
+    color: Colors.primaryTextWhite,
+	},
+  visitortext: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    paddingLeft:12,
+    backgroundColor: Colors.backgroundColor,
+    paddingVertical:4,
+    paddingBottom: 8,
+  },
+  visitorinfo: {
+    flex:1,
+    flexDirection: 'row',
+    paddingVertical:4,
+    backgroundColor: Colors.backgroundColor,
+  },
+  username: {
+    paddingLeft: 5,
+    paddingRight:24,
+    fontWeight: 'bold',
+  },
+  weekdate: {
+    paddingLeft: 5,
+    paddingRight:24,
+    paddingTop:4,
+  },
+  usermessage: {
+    paddingLeft: 5,
+    paddingRight:24,
+    paddingTop:10,
+  },
+  userarea: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  listpart: {
+    flexDirection:'column',
+  }
+
 });

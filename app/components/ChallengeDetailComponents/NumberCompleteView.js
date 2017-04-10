@@ -16,11 +16,9 @@ export default class NumberCompleteView extends Component {
     return (
     <View style = {styles.numcompletedarea}>
       <Image
-        style = {{width: 25, height: 25, marginLeft: 12}}
+        style = {styles.imagearea}
         source = {accountmultiple}/>
-      <Text style = {{paddingLeft: 24}}>Completed by </Text>
-      <Text>{this.props.challenge.completedBy.length}</Text>
-      <Text> people</Text>
+      <Text style = {styles.textarea}>Completed by {this.props.challenge.completedBy.length} people</Text>
     </View>
     );
   }
@@ -29,12 +27,6 @@ export default class NumberCompleteView extends Component {
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
   numcompletedarea: {
     flex:1,
     flexDirection: 'row',
@@ -42,5 +34,10 @@ const styles = StyleSheet.create({
     alignItems:'center',
     backgroundColor: Colors.backgroundColor,
   },
-
+  imagearea: {
+    width: 25, height: 25, marginLeft: 12,
+  },
+  textarea: {
+    paddingLeft: 24,
+  }
 });

@@ -34,7 +34,7 @@ export default class ChallengeStartButton extends Component {
       {/*<TouchableHighlight onPress={()=>this.goToMainMapScene(this.props.challenge)}>*/}
           <View style={styles.button}>
               <Image
-                  style = {{width: 25, height: 25}}
+                  style = {styles.imagearea}
                   source= {run}/>
           </View>
       {/*</TouchableHighlight>*/}
@@ -62,6 +62,10 @@ const styles = StyleSheet.create({
 		fontSize: 24,
 		fontWeight: "bold",
 		textAlign: "center",
-		color: "#FFFFFF"
-	}
+		color: Colors.primaryTextWhite
+	},
+  imagearea: {
+    width: 25,
+    height: 25
+  }
 });

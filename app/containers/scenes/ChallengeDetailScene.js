@@ -46,10 +46,10 @@ export default class ChallengeDetailScene extends Component {
     };
 
     return (
-      <View style={{flex:1, backgroundColor: Colors.backgroundColor}}>
+      <View style={styles.challengedetailarea}>
 
         <ScrollView>
-           <MapView style = {{height: 200}}
+           <MapView style = {styles.maparea}
             initialRegion = {initialRegion}
             cacheEnabled ={true}
             loadingEnabled>
@@ -69,25 +69,11 @@ export default class ChallengeDetailScene extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+  challengedetailarea: {
+    flex:1,
+    backgroundColor: Colors.backgroundColor
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  separator: {
-    flex: 1,
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: '#8E8E8E',
+  maparea: {
+    height: 200
   },
 });
