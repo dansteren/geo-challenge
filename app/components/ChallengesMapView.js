@@ -94,7 +94,7 @@ export default class ChallengesMapView extends Component {
 					{this.props.selectedChallenge &&
 						<MapView.Polyline
 							key="selectedChallengeRoute"
-							coordinates={this.props.selectedChallenge.locations}
+							coordinates={this.props.selectedChallenge.points}
 							strokeColor="#F00"
 							fillColor="rgba(255,0,0,0.5)"
 							strokeWidth={2}
@@ -128,7 +128,7 @@ ChallengesMapView.propTypes = {
 	}),
 	selectedChallenge: PropTypes.shape({
 		id: PropTypes.string.isRequired,
-		locations: PropTypes.array.isRequired
+		points: PropTypes.array.isRequired
 	}),
 	primaryMarkers: PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.string.isRequired,

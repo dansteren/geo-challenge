@@ -30,7 +30,6 @@ export default class MainMapScene extends Component {
 		this.handleOnHeadMarkerDeselect = this.handleOnHeadMarkerDeselect.bind(this);
 		this.handleOnButtonPressed = this.handleOnButtonPressed.bind(this);
 		this._loadMap = this._loadMap.bind(this);
-		this._tempMapServerDataToMockData = this._tempMapServerDataToMockData.bind(this);
 	}
 
 	componentDidMount() {
@@ -62,8 +61,9 @@ export default class MainMapScene extends Component {
 
 	_getSelectedChallengeById(challengeId, challenges) {
 		var selectedChallenge = challenges.find(function(challenge) {
-			return challenge.id === challengeId;
+			return challenge.id.toString() === challengeId;
 		});
+		selectedChallenge.id = selectedChallenge.id.toString();
 		return selectedChallenge;
 	}
 
@@ -87,28 +87,6 @@ export default class MainMapScene extends Component {
 		);
 	}
 
-	_tempMapServerDataToMockData(challenges) {
-
-		challenges.map((challenge, index) => {
-			challenge.id = challenge.id.toString();
-			challenge.locations = challenge.points;
-			challenge.owner = {
-				"id": "0a9ds7a767ac7vr5as4de4465464646",
-				"displayName": "Tina Turner"
-			};
-			challenge.completedBy = [
-				{
-					"id": "1s12fa1243g3kok6800llpmc1q76",
-					"user": "Billy Bob",
-					"message": "Text"
-				}
-			];
-			challenge.created = challenge.dateCreated;
-			return challenge;
-		});
-		return challenges;
-	}
-
 	_loadChallengesForLocation(location, radius) {
 		let longitude = location.longitude;
 		let latitude = location.latitude;
@@ -125,9 +103,6 @@ export default class MainMapScene extends Component {
 		.then((response) => response.json())
 		.then((responseJson) => {
 			var challenges = responseJson.challenges;
-			// TEMP map data to new keys and inject missing data //
-			challenges = this._tempMapServerDataToMockData(challenges);
-			// END DATA MANIPULATION //
 
 			// set challenges
 			this.setState({
@@ -153,12 +128,12 @@ export default class MainMapScene extends Component {
 
 		var headMarkers = challenges.map(challenge => (
 			{
-				id: challenge.id || challenge.title,
-				title: challenge.locations[0].title,
+				id: challenge.id.toString() || challenge.title,
+				title: challenge.points[0].title,
 				chalengeDescription: challenge.description,
 				latlng: {
-					latitude: challenge.locations[0].latitude,
-					longitude: challenge.locations[0].longitude
+					latitude: challenge.points[0].latitude,
+					longitude: challenge.points[0].longitude
 				},
 			}
 		));
@@ -166,14 +141,14 @@ export default class MainMapScene extends Component {
 	}
 
 	_createTrailingMarkersForChallenge(challenge) {
-		var trailingMarkers = challenge.locations.slice(1).map((location, index) => (
+		var trailingMarkers = challenge.points.slice(1).map((point, index) => (
 			{
 				id: challenge.id + "-" + (index+1),
-				title: location.title,
+				title: point.title,
 				chalengeDescription: challenge.description,
 				latlng: {
-					latitude: location.latitude,
-					longitude: location.longitude
+					latitude: point.latitude,
+					longitude: point.longitude
 				},
 			}
 		));
