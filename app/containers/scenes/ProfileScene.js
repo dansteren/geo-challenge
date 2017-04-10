@@ -4,7 +4,8 @@ import {
   Text,
   TextInput,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  AsyncStorage
 } from 'react-native';
 
 import { ProfileSceneCss as styles } from './ProfileScene.css.js'
@@ -13,14 +14,54 @@ export default class ProfileScene extends Component {
 
   constructor(props) {
     super(props)
-    let data = JSON.parse('{"id":"0a9ds7a767ac7vr5as4de4465464646","firstName":"Tina","lastName":"Turner","displayName":"Tina Turner","email":"tina@singer.com","birthday":"Aug 20, 1998","interestedChallenges":["d53h338383hjsjbs623yjb923u2h2939","9a7a5d5d7v8a7hwh11199dhsdjb2387y"],"completedChallenges":["6a6a5a55sdfh12j3jb1423123412jhkjs"],"createdChallenges":["6a6a5a55sdfh12j3jb1423123412jhkjs"],"created":"Mon Feb 06 2017 00:45:48 GMT-0700 (MST)"}')
+
     this.state = {
-      userData: data,
-      completedCount: data.completedChallenges.length,
-      createdCount: data.createdChallenges.length,
-      profChar: data.firstName.charAt(0),
-      edit: false
+        displayName: '',
+        completedCount: 0,
+        profChar: '?'
     }
+  }
+
+  componentDidMount() {
+    this.getUserData();
+  }
+
+  async getUserData() {
+    try {
+      const name = await AsyncStorage.getItem('@GeoChallenges:username');
+      const id = await AsyncStorage.getItem('@GeoChallenges:id');
+
+      this.getAchievements(name, id);
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  getAchievements(name, id) {
+    let formData = new FormData();
+    formData.append('token', 'geo-ninjas');
+    formData.append('user', id);
+    fetch('http://enexia.com:10000/geo-challenge/achievement/getAllByUser', {
+      method: 'POST',
+      body: formData
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if(responseJson.success) {
+        this.setState({
+          displayName: name,
+          profChar: name.charAt(0),
+          completedCount: responseJson.achievements.length
+        })
+      }
+      else {
+        console.error('there is a problem retrieving data from the server')
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
   }
 
   render() {
@@ -36,12 +77,14 @@ export default class ProfileScene extends Component {
             </View>
           </View>
           <View style={styles.bottomText}>
-            <Text style={styles.displayName}>{this.state.userData.displayName}</Text>
+            <Text style={styles.displayName}>{this.state.displayName}</Text>
             <Text style={styles.textBelow}>Challenges Completed: {this.state.completedCount}</Text>
-            <Text style={styles.textBelow}>Challenges Created: {this.state.createdCount}</Text>
           </View>
         </View>
       </View>
     )
   }
 }
+
+// I don't know that the server gives you an array of all challenges created
+//<Text style={styles.textBelow}>Challenges Created: {this.state.createdCount}</Text>
