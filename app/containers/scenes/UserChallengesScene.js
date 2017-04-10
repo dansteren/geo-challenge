@@ -23,8 +23,7 @@ export default class UserChallengesScene extends Component {
       index: 0,
       routes: [
         { key: '1', title: 'Created' },
-        { key: '2', title: 'Interested' },
-        { key: '3', title: 'Completed'}
+        { key: '2', title: 'Completed' }
       ],
     };
 
@@ -33,10 +32,6 @@ export default class UserChallengesScene extends Component {
   componentDidMount() {
     GeoServer.getChallenges().then((challenges)=>{
       this.setState({createdChallenges: challenges});
-    })
-
-    GeoServer.getChallenges().then((challenges)=>{
-      this.setState({interestedChallenges: challenges});
     })
 
     GeoServer.getCompleted().then((challenges)=>{
@@ -58,8 +53,6 @@ export default class UserChallengesScene extends Component {
     case '1':
       return <ChallengesListView navigator={this.props.navigator} challenges={this.state.createdChallenges}/>;
     case '2':
-      return <ChallengesListView navigator={this.props.navigator} challenges={this.state.interestedChallenges}/>;
-    case '3':
       return <ChallengesListView navigator={this.props.navigator} challenges={this.state.completedChallenges}/>;
     default:
       return null;
