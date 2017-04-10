@@ -5,6 +5,7 @@ import {
   Button,
   StyleSheet
 } from 'react-native';
+import { Colors } from '../../theme/theme';
 
 export default class GeneralDetailView extends Component {
 
@@ -29,9 +30,9 @@ export default class GeneralDetailView extends Component {
   render() {
     return (
     <View style = {styles.generaldescriptionarea}>
-      <Text>{this.props.challenge.title}</Text>
-      <Text>by {this.props.challenge.owner.displayName}</Text>
-      <Text>Expires: {this.expirationDate(this.props.challenge.expiration)}</Text>
+      <Text style = {styles.texttitlecss}>{this.props.challenge.title}</Text>
+      <Text style = {styles.textcss}>by {this.props.challenge.owner.displayName}</Text>
+      <Text style = {styles.textcss}>Expires: {this.expirationDate(this.props.challenge.expiration)}</Text>
     </View>
     );
   }
@@ -42,15 +43,21 @@ export default class GeneralDetailView extends Component {
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
   generaldescriptionarea: {
     flex:1,
     flexDirection: 'column',
-
+    backgroundColor: Colors.accentColor,
+    height: 110,
   },
+    texttitlecss: {
+    color: Colors.primaryTextWhite,
+    fontSize: 20,
+    paddingTop: 14,
+    paddingLeft:12,
+  },
+  textcss: {
+    paddingTop: 8,
+    color: Colors.primaryTextWhite,
+    paddingLeft:12,
+  }
 });

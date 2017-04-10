@@ -11,6 +11,7 @@ import { LocationDetailRoute } from '../../routes/defaultRoutes'
 import lockOutline from '../../assets/lock.png';
 import lockOpenOutline from '../../assets/lock-open-outline.png';
 import mapMarker from '../../assets/map-marker.png'
+import { Colors } from '../../theme/theme';
 
 export default class CoordinatesView extends Component {
 
@@ -33,34 +34,32 @@ export default class CoordinatesView extends Component {
 
 	render() {
 		return (
-		<View>
+		<View style = {styles.overallarea}>
 				{this.props.challenge.locations.map(location => (
 					location.lockType === "auto" ?
 
 					<TouchableHighlight
 						key={location.title+location.latitude+location.longitude+1}
 						onPress={()=>this.goToLocationDetailScene(location)}>
-					 <View style = {{flex:1, flexDirection: 'row',}} >
+					 <View style = {styles.touchablehighlightarea} >
 							<Image
-								style = {{width: 25, height: 25}}
+								style = {styles.leftimagearea}
 								source= {mapMarker}/>
-							<Text>     {location.latitude}, {location.longitude}  	  </Text>
+							<Text style = {styles.textarea}>{location.latitude}, {location.longitude}</Text>
 							<Image
-								style = {{width: 15, height: 15}}
+								style = {styles.rightimagearea}
 								source= {lockOpenOutline}/>
 						</View>
 					 </TouchableHighlight>
 					:
 					<TouchableHighlight  key={location.title+location.longitude+location.latitude}>
-					 	<View style = {{flex:1, flexDirection: 'row',}} >
+					 	<View style = {styles.touchablehighlightarea} >
 							<Image
-								style = {{width: 25, height: 25}}
+								style = {styles.leftimagearea}
 								source= {mapMarker}/>
-							<Text>     {location.longitude}</Text>
-							<Text>, </Text>
-							<Text>{location.latitude}     </Text>
+							<Text style = {styles.textarea}>{location.longitude}, {location.latitude}</Text>
 							<Image
-								style = {{width: 15, height: 15}}
+								style = {styles.rightimagearea}
 								source= {lockOutline}/>
 						</View>
 					 </TouchableHighlight>
@@ -69,3 +68,28 @@ export default class CoordinatesView extends Component {
 		);
 	}
 }
+const styles = StyleSheet.create({
+
+  leftimagearea: {
+	  width: 25,
+	  height: 25,
+	  marginLeft: 12
+	},
+	rightimagearea: {
+		width: 15,
+		height: 15,
+		marginLeft: 24,
+	},
+	touchablehighlightarea: {
+		flex:1,
+		flexDirection: 'row',
+		height: 55,
+		alignItems:'center',
+	},
+	textarea: {
+		paddingLeft: 24
+	},
+	overallarea: {
+		backgroundColor: Colors.backgroundColor,
+	}
+});

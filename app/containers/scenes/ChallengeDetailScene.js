@@ -14,6 +14,7 @@ import { LocationDetailRoute } from '../../routes/defaultRoutes'
 import { MainMapRoute } from '../../routes/defaultRoutes'
 import mockData from '../../mockData.json' // TEMP
 import MapView from 'react-native-maps';
+import { Colors } from '../../theme/theme';
 
 import CoordinatesView from '../../components/ChallengeDetailComponents/CoordinatesView'
 import VisitorView from '../../components/ChallengeDetailComponents/VisitorView'
@@ -45,15 +46,17 @@ export default class ChallengeDetailScene extends Component {
     };
 
     return (
-      <View style={{flex:1}}>
-        <MapView style = {{flex:0.25}}
-          initialRegion = {initialRegion}
-          cacheEnabled ={true}
-          loadingEnabled>
-        </MapView>
-        <ScrollView style={{flex: 0.75}}>
-          {/*Challenge Start View will go to start a challenge page once it is set up, right now it is commented out*/}
-          <ChallengeStartButton challenge={this.props.challenge} navigator={this.props.navigator}/>
+      <View style={styles.challengedetailarea}>
+
+        <ScrollView>
+           <MapView style = {styles.maparea}
+            initialRegion = {initialRegion}
+            cacheEnabled ={true}
+            loadingEnabled>
+
+            {/*Challenge Start View will go to start a challenge page once it is set up, right now it is commented out*/}
+            <ChallengeStartButton challenge={this.props.challenge} navigator={this.props.navigator}/>
+          </MapView>
           <GeneralDetailView challenge = {this.props.challenge} />
           <CoordinatesView challenge={this.props.challenge} navigator={this.props.navigator}/>
           <NumberCompleteView challenge={this.props.challenge} />
@@ -66,25 +69,11 @@ export default class ChallengeDetailScene extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+  challengedetailarea: {
+    flex:1,
+    backgroundColor: Colors.backgroundColor
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  separator: {
-    flex: 1,
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: '#8E8E8E',
+  maparea: {
+    height: 200
   },
 });
